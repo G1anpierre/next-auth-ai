@@ -10,13 +10,17 @@ import { createGoalAction } from "@/actions/goal-actions";
 
 const initialState = {
   message: "",
+  success: false,
 };
 
 export const FormInputSection = () => {
-  const [state, action, isPending] = useActionState(createGoalAction, null);
+  const [state, actionCreateGoal, isPending] = useActionState(
+    createGoalAction,
+    initialState
+  );
 
   return (
-    <form action={action}>
+    <form action={actionCreateGoal}>
       <div className="flex flex-col gap-4">
         <Input placeholder="Goal Name" name="goalName" type="string" />
         <Input placeholder="Target Amount" name="targetAmount" type="number" />
@@ -30,8 +34,8 @@ export const FormInputSection = () => {
               ))}
             </SelectSection>
           </Select>
-          <Button color="primary" type="submit">
-            Button
+          <Button color="primary" type="submit" isLoading={isPending}>
+            Add Goal
           </Button>
         </div>
       </div>

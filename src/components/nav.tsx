@@ -11,9 +11,12 @@ import {
   Link,
   Button,
 } from "@nextui-org/react";
+import { useSession } from "next-auth/react";
+import { signOut } from "@/actions/sign-out";
 
 export const Nav = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { data: session } = useSession();
 
   const menuItems = [
     "Profile",
@@ -49,25 +52,38 @@ export const Nav = () => {
             Features
           </Link>
         </NavbarItem>
-        <NavbarItem isActive>
-          <Link href="tracker" aria-current="page">
-            Tracker
-          </Link>
-        </NavbarItem>
         <NavbarItem>
           <Link color="foreground" href="#">
             Integrations
           </Link>
         </NavbarItem>
+        {session && (
+          <NavbarItem isActive>
+            <Link href="tracker" aria-current="page">
+              Tracker
+            </Link>
+          </NavbarItem>
+        )}
       </NavbarContent>
       <NavbarContent justify="end">
         <NavbarItem className="hidden lg:flex">
           <Link href="#">Login</Link>
         </NavbarItem>
         <NavbarItem>
-          <Button as={Link} color="primary" href="#" variant="flat">
-            Sign Up
-          </Button>
+          {!session ? (
+            <Button as={Link} color="primary" href="/login" variant="flat">
+              Sign Up
+            </Button>
+          ) : (
+            <div className="flex items-center gap-2">
+              <p>{session.user?.name}</p>
+              <form action={signOut}>
+                <Button color="primary" variant="flat" type="submit">
+                  Logout
+                </Button>
+              </form>
+            </div>
+          )}
         </NavbarItem>
       </NavbarContent>
       <NavbarMenu>
