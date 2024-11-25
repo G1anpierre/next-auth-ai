@@ -6,13 +6,12 @@ import {
   CardHeader,
   CardBody,
   CardFooter,
-  Input,
-  Button,
   Progress,
 } from "@nextui-org/react";
 import { Goal } from "@prisma/client";
 import { formatCurrency } from "@/utils/format-currency";
 import { GoalDelete } from "./goal-delete";
+import { GoalUpdate } from "./goal-update";
 
 const GoalCard = ({ goal }: { goal: Goal }) => {
   return (
@@ -35,15 +34,7 @@ const GoalCard = ({ goal }: { goal: Goal }) => {
       </CardBody>
       <CardFooter>
         <div className="flex justify-between w-full">
-          <div className="flex gap-2">
-            <Input
-              type="number"
-              className="max-w-xs"
-              placeholder="Amount"
-              min={0}
-            />
-            <Button color="primary">Update</Button>
-          </div>
+          <GoalUpdate goalId={goal.id} />
           <GoalDelete goalId={goal.id} />
         </div>
       </CardFooter>

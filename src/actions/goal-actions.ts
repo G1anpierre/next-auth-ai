@@ -72,6 +72,7 @@ export const getGoalsAction = async () => {
       where: {
         userId: session.user.id,
       },
+      orderBy: [{ createdAt: "desc" }],
     });
 
     return {
@@ -84,18 +85,6 @@ export const getGoalsAction = async () => {
       message: "An error occurred while fetching goals",
       success: false,
     };
-  }
-};
-
-// Update a Goal
-export const updateGoalAction = async (
-  previousState: any,
-  formData: FormData
-) => {
-  try {
-    const session = await auth();
-  } catch (error) {
-    console.error("Error updating goal:", error);
   }
 };
 
@@ -117,6 +106,46 @@ export const deleteGoalAction = async (goalId: number) => {
     console.error("Error deleting goal:", error);
     return {
       message: "An error occurred while deleting the goal",
+      success: false,
+    };
+  }
+};
+
+// Update a Goal
+export const updateGoalAction = async (goalId: number, amount: number) => {
+  try {
+    // First, get the current value
+    const currentGoal = await prisma.goal.findUnique({
+      where: { id: goalId },
+      select: { current: true, target: true },
+    });
+
+    if (!currentGoal) {
+      return {
+        message: "Goal not found",
+        success: false,
+      };
+    }
+
+    await prisma.goal.update({
+      where: { id: goalId },
+      data: {
+        current:
+          currentGoal.current + amount >= currentGoal.target
+            ? currentGoal.target
+            : currentGoal.current + amount,
+      },
+    });
+
+    revalidatePath("/tracker");
+    return {
+      message: "Goal updated successfully!",
+      success: true,
+    };
+  } catch (error) {
+    console.error("Error updating goal:", error);
+    return {
+      message: "An error occurred while updating the goal",
       success: false,
     };
   }
