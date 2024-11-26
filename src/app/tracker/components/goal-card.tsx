@@ -12,6 +12,7 @@ import { Goal } from "@prisma/client";
 import { formatCurrency } from "@/utils/format-currency";
 import { GoalDelete } from "./goal-delete";
 import { GoalUpdate } from "./goal-update";
+import { Icon } from "@iconify/react";
 
 const GoalCard = ({ goal }: { goal: Goal }) => {
   return (
@@ -30,6 +31,16 @@ const GoalCard = ({ goal }: { goal: Goal }) => {
           <p className="text-sm">
             {formatCurrency(goal.current)} / {formatCurrency(goal.target)}
           </p>
+          {goal.targetDate && (
+            <div className="flex items-center gap-1">
+              <Icon icon="ph:calendar-duotone" width={16} />{" "}
+              {goal.targetDate?.toLocaleDateString("en-US", {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+              })}
+            </div>
+          )}
         </div>
       </CardBody>
       <CardFooter>

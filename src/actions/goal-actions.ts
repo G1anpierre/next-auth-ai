@@ -23,8 +23,9 @@ export const createGoalAction = async (
     const goalName = formData.get("goalName");
     const targetAmount = formData.get("targetAmount");
     const category = formData.get("category");
+    const targetDate = formData.get("targetDate");
 
-    if (!goalName || !targetAmount || !category) {
+    if (!goalName || !targetAmount || !category || !targetDate) {
       return {
         message: "Please fill out all fields",
         success: false,
@@ -38,6 +39,7 @@ export const createGoalAction = async (
         target: parseFloat(targetAmount.toString()),
         current: 0, // Starting with 0 progress
         category: category.toString(),
+        targetDate: new Date(targetDate.toString()),
         userId: session.user.id,
       },
     });
