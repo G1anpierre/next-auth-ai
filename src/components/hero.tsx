@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@nextui-org/react";
+import { Button, Link } from "@nextui-org/react";
 import React from "react";
 import { Icon } from "@iconify/react";
 
@@ -24,17 +24,19 @@ export const Hero = () => {
         </Button>
         <div className="text-center text-[clamp(40px,10vw,44px)] font-bold leading-[1.2] tracking-tighter sm:text-[64px]">
           <div className="bg-hero-section-title bg-clip-text">
-            Easiest way to <br /> track your finances.
+            Easiest way to <br /> track your finances with AI.
           </div>
         </div>
         <p className="text-center font-normal leading-7 text-default-500 sm:w-[466px] sm:text-[18px]">
           Take control of your finances effortlessly. Track expenses, manage
-          budgets, and achieve your financial goals with ease.
+          budgets, and achieve your financial goals with the power of AI.
         </p>
         <div className="flex flex-col items-center justify-center gap-6 sm:flex-row">
           <Button
             className="h-10 w-[163px] px-[16px] py-[10px] text-small font-medium leading-5 text-background"
             radius="full"
+            as={Link}
+            href="/tracker"
           >
             Get Started
           </Button>
