@@ -1,13 +1,12 @@
 import { getGoalsAction } from "@/actions/goal-actions";
 import React from "react";
 import GoalCard from "./goal-card";
+import { Goal } from "@prisma/client";
 
-const GoalsSection = async () => {
-  const response = await getGoalsAction();
-
+const GoalsSection = async ({ goals }: { goals: Goal[] }) => {
   return (
     <div className="flex flex-col gap-4">
-      {response.data?.map((goal) => (
+      {goals.map((goal) => (
         <GoalCard key={goal.id} goal={goal} />
       ))}
     </div>
