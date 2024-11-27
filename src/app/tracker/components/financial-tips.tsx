@@ -9,7 +9,8 @@ import {
   Button,
 } from "@nextui-org/react";
 import { Goal } from "@prisma/client";
-import { useCompletion } from "ai/react";
+import { experimental_useObject as useObject } from "ai/react";
+import { z } from "zod";
 
 export const FinancialTips = ({
   goals,
@@ -18,23 +19,38 @@ export const FinancialTips = ({
   goals: Goal[];
   budget: { income: number; expenses: number };
 }) => {
-  const { complete, completion, isLoading } = useCompletion({
+  const { object, submit, isLoading } = useObject({
     api: "/api/ai/financial-tips",
+    schema: z.object({
+      tips: z.array(
+        z.object({
+          number: z.number().describe("The tip number"),
+          title: z.string().describe("The tip title"),
+          content: z.string().describe("The tip content"),
+        })
+      ),
+    }),
   });
 
-  const generateTips = async () => {
-    const prompt = `Based on the following financial information, provide 3 personalized financial tips:
-    Income: $${budget.income}
-    Expenses: $${budget.expenses}
+  const generateTips = () => {
+    const prompt = `Based on the following financial information, provide 6 personalized financial tips:
+    monthly income: $${budget.income}
+    monthly expenses: $${budget.expenses}
+    available cash: $${budget.income - budget.expenses}
     Goals: ${goals
-      .map((goal) => `${goal.name} ($${goal.current}/$${goal.target})`)
+      .map(
+        (goal) =>
+          `${goal.name} (currently saved: $${
+            goal.current
+          }, target to achieve: $${goal.target}) by ${
+            goal.targetDate ?? "no target date"
+          }`
+      )
       .join(", ")}
     Provide specific, actionable advice tailored to this financial situation.`;
 
-    await complete(prompt);
+    submit(prompt);
   };
-
-  console.log("completion", completion);
 
   return (
     <Card>
@@ -59,42 +75,29 @@ export const FinancialTips = ({
         </Button>
       </CardBody>
       <CardFooter>
-        {completion && (
-          <div className="space-y-6 w-full">
-            {completion.split("\n\n").map((tip, index) => {
-              // Skip empty strings
-              if (!tip.trim()) return null;
-
-              // Extract the number and title if present
-              const match = tip.match(/(\d+)\.\s+\*\*([^:]+):\*\*/);
-              if (!match) return null;
-
-              const [_, number, title] = match;
-              const content = tip.replace(/\d+\.\s+\*\*[^:]+:\*\*\s*/, "");
-
-              return (
-                <div
-                  key={index}
-                  className="flex gap-4 p-4 rounded-lg bg-default-50 hover:bg-default-100 transition-colors"
-                >
-                  <div className="flex-shrink-0">
-                    <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-white font-semibold">
-                      {number}
-                    </div>
-                  </div>
-                  <div className="flex-grow">
-                    <h3 className="font-semibold text-lg text-default-900 mb-2">
-                      {title}
-                    </h3>
-                    <p className="text-default-600 leading-relaxed">
-                      {content}
-                    </p>
+        <div className="flex flex-col gap-4">
+          {object?.tips &&
+            object.tips.map((tip, key) => (
+              <div
+                key={`${tip?.number}-${key}`}
+                className="flex gap-4 p-4 rounded-lg bg-default-50 hover:bg-default-100 transition-colors"
+              >
+                <div className="flex-shrink-0">
+                  <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-white font-semibold">
+                    {tip?.number}
                   </div>
                 </div>
-              );
-            })}
-          </div>
-        )}
+                <div className="flex-grow">
+                  <h3 className="font-semibold text-lg text-default-900 mb-2">
+                    {tip?.title}
+                  </h3>
+                  <p className="text-default-600 leading-relaxed">
+                    {tip?.content}
+                  </p>
+                </div>
+              </div>
+            ))}
+        </div>
       </CardFooter>
     </Card>
   );

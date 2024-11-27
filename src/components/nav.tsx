@@ -47,7 +47,7 @@ export const Nav = () => {
       </NavbarContent>
 
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
-        <NavbarItem>
+        {/* <NavbarItem>
           <Link color="foreground" href="#">
             Features
           </Link>
@@ -56,19 +56,16 @@ export const Nav = () => {
           <Link color="foreground" href="#">
             Integrations
           </Link>
-        </NavbarItem>
+        </NavbarItem> */}
         {session && (
           <NavbarItem isActive>
             <Link href="tracker" aria-current="page">
-              Tracker
+              Dashboard
             </Link>
           </NavbarItem>
         )}
       </NavbarContent>
       <NavbarContent justify="end">
-        <NavbarItem className="hidden lg:flex">
-          <Link href="#">Login</Link>
-        </NavbarItem>
         <NavbarItem>
           {!session ? (
             <Button as={Link} color="primary" href="/login" variant="flat">
