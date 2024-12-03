@@ -110,9 +110,9 @@ const teamMembers: TeamMember[] = [
 
 export const Team = () => {
   return (
-    <section className="flex max-w-4xl flex-col items-center py-24">
+    <section className="flex max-w-6xl mx-auto flex-col items-center py-24">
       <div className="flex max-w-xl flex-col text-center">
-        <h2 className="font-medium text-secondary">We&apos;re hiring!</h2>
+        <h2 className="font-medium text-primary">We&apos;re hiring!</h2>
         <h1 className="text-4xl font-medium tracking-tight">Meet our team.</h1>
         <Spacer y={4} />
         <h2 className="text-large text-default-500">
@@ -122,7 +122,7 @@ export const Team = () => {
         <Spacer y={4} />
         <div className="flex w-full justify-center gap-2">
           <Button variant="ghost">About us</Button>
-          <Button color="secondary">Open positions</Button>
+          <Button color="primary">Open positions</Button>
         </div>
       </div>
       <div className="mt-12 grid w-full grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">

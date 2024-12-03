@@ -3,8 +3,11 @@
 import { Button, Link } from "@nextui-org/react";
 import React from "react";
 import { Icon } from "@iconify/react";
+import { useSession } from "next-auth/react";
 
 export const Hero = () => {
+  const session = useSession();
+
   return (
     <main>
       <section className="z-20 flex flex-col items-center justify-center gap-[18px] sm:gap-6">
@@ -36,7 +39,7 @@ export const Hero = () => {
             className="h-10 w-[163px] px-[16px] py-[10px] text-small font-medium leading-5 text-background"
             radius="full"
             as={Link}
-            href="/tracker"
+            href={session.data?.user ? "/dashboard" : "/login"}
           >
             Get Started
           </Button>
@@ -53,6 +56,8 @@ export const Hero = () => {
             }
             radius="full"
             variant="bordered"
+            as={Link}
+            href="#pricing"
           >
             See our plans
           </Button>

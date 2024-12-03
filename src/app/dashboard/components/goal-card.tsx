@@ -19,7 +19,9 @@ const GoalCard = ({ goal }: { goal: Goal }) => {
     <Card>
       <CardHeader className="flex flex-col gap-1 items-start">
         <h1 className="text-xl font-bold">{goal.name}</h1>
-        <p className="text-base text-default-500">{goal.category}</p>
+        <p className="text-base text-default-500">
+          {goal.category} - priority: {goal.priority}
+        </p>
       </CardHeader>
       <CardBody>
         <Progress

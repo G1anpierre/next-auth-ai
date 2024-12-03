@@ -32,13 +32,16 @@ export const Pricing = () => {
   };
 
   return (
-    <div className="relative flex max-w-4xl flex-col items-center py-24">
+    <div
+      className="relative flex max-w-6xl mx-auto flex-col items-center py-24"
+      id="pricing"
+    >
       <div
         aria-hidden="true"
         className="px:5 absolute inset-x-0 top-3 z-0 h-full w-full transform-gpu overflow-hidden blur-3xl md:right-20 md:h-auto md:w-auto md:px-36"
       >
         <div
-          className="mx-auto aspect-[1155/678] w-[72.1875rem] bg-gradient-to-tr from-[#FF71D7] to-[#C9A9E9] opacity-30"
+          className="mx-auto aspect-[1155/678] w-[72.1875rem] bg-gradient-to-tr from-[#00C6FF] to-[#0072FF] opacity-30"
           style={{
             clipPath:
               "polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)",
@@ -72,7 +75,7 @@ export const Pricing = () => {
           title={
             <div className="flex items-center gap-2">
               <p>Pay Yearly</p>
-              <Chip color="secondary" variant="flat">
+              <Chip color="primary" variant="flat">
                 Save 25%
               </Chip>
             </div>
@@ -87,14 +90,14 @@ export const Pricing = () => {
             key={tier.key}
             isBlurred
             className={cn("bg-background/60 p-3 dark:bg-default-100/50", {
-              "!border-small border-secondary/50": tier.mostPopular,
+              "!border-small border-primary/50": tier.mostPopular,
             })}
             shadow="md"
           >
             {tier.mostPopular ? (
               <Chip
                 className="absolute right-4 top-4"
-                color="secondary"
+                color="primary"
                 variant="flat"
               >
                 Most Popular
@@ -123,11 +126,7 @@ export const Pricing = () => {
               <ul className="flex flex-col gap-2">
                 {tier.features?.map((feature) => (
                   <li key={feature} className="flex items-center gap-2">
-                    <Icon
-                      className="text-secondary"
-                      icon="ci:check"
-                      width={24}
-                    />
+                    <Icon className="text-primary" icon="ci:check" width={24} />
                     <p className="text-default-500">{feature}</p>
                   </li>
                 ))}
@@ -137,7 +136,7 @@ export const Pricing = () => {
               <Button
                 fullWidth
                 as={Link}
-                color="secondary"
+                color="primary"
                 href={tier.href}
                 variant={tier.buttonVariant}
               >

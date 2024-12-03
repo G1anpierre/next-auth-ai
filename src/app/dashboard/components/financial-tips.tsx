@@ -47,7 +47,7 @@ export const FinancialTips = ({
           }`
       )
       .join(", ")}
-    Provide specific, actionable advice tailored to this financial situation.`;
+  `;
 
     submit(prompt);
   };

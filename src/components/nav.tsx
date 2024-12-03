@@ -59,7 +59,7 @@ export const Nav = () => {
         </NavbarItem> */}
         {session && (
           <NavbarItem isActive>
-            <Link href="tracker" aria-current="page">
+            <Link href="/dashboard" aria-current="page">
               Dashboard
             </Link>
           </NavbarItem>

@@ -24,8 +24,9 @@ export const createGoalAction = async (
     const targetAmount = formData.get("targetAmount");
     const category = formData.get("category");
     const targetDate = formData.get("targetDate");
+    const priority = formData.get("priority");
 
-    if (!goalName || !targetAmount || !category || !targetDate) {
+    if (!goalName || !targetAmount || !category || !targetDate || !priority) {
       return {
         message: "Please fill out all fields",
         success: false,
@@ -40,11 +41,12 @@ export const createGoalAction = async (
         current: 0, // Starting with 0 progress
         category: category.toString(),
         targetDate: new Date(targetDate.toString()),
+        priority: priority.toString(),
         userId: session.user.id,
       },
     });
 
-    revalidatePath("/tracker");
+    revalidatePath("/dashboard");
     return {
       message: "Goal created successfully!",
       success: true,
