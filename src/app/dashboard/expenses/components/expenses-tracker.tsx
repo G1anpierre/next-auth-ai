@@ -4,12 +4,11 @@ import {
   Card,
   CardHeader,
   CardBody,
-  Select,
-  SelectSection,
-  SelectItem,
   Input,
   Switch,
   Button,
+  Autocomplete,
+  AutocompleteItem,
 } from "@nextui-org/react";
 import { useActionState } from "react";
 
@@ -34,10 +33,7 @@ const SelectExpensesOptions = [
 export const ExpensesTracker = () => {
   const [isSelected, setIsSelected] = React.useState(false);
 
-  const [state, actionCreateExpense, isPending] = useActionState(
-    createExpenseAction,
-    initialState
-  );
+  const [state, actionCreateExpense, isPending] = useActionState(createExpenseAction, initialState);
 
   return (
     <form action={actionCreateExpense}>
@@ -48,7 +44,7 @@ export const ExpensesTracker = () => {
         </CardHeader>
         <CardBody className="flex flex-col gap-4">
           <div className="flex gap-4 flex-wrap">
-            <Select
+            {/* <Select
               placeholder="Category"
               className="max-w-xs"
               name="categoryExpense"
@@ -60,13 +56,17 @@ export const ExpensesTracker = () => {
                   </SelectItem>
                 ))}
               </SelectSection>
-            </Select>
-            <Input
-              placeholder="Amount"
-              name="amountExpense"
-              type="number"
+            </Select> */}
+            <Autocomplete
+              placeholder="Category"
+              allowsCustomValue
               className="max-w-xs"
-            />
+              defaultItems={SelectExpensesOptions}
+              name="categoryExpense"
+            >
+              {(item) => <AutocompleteItem key={item.key}>{item.value}</AutocompleteItem>}
+            </Autocomplete>
+            <Input placeholder="Amount" name="amountExpense" type="number" className="max-w-xs" />
             <Switch
               isSelected={isSelected}
               value={isSelected.toString()}

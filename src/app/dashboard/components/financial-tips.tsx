@@ -1,13 +1,7 @@
 "use client";
 
 import React from "react";
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  CardFooter,
-  Button,
-} from "@nextui-org/react";
+import { Card, CardHeader, CardBody, CardFooter, Button } from "@nextui-org/react";
 import { Goal } from "@prisma/client";
 import { experimental_useObject as useObject } from "ai/react";
 import { z } from "zod";
@@ -42,9 +36,7 @@ export const FinancialTips = ({
         (goal) =>
           `${goal.name} (currently saved: $${
             goal.current
-          }, target to achieve: $${goal.target}) by ${
-            goal.targetDate ?? "no target date"
-          }`
+          }, target to achieve: $${goal.target}) by ${goal.targetDate ?? "no target date"}`
       )
       .join(", ")}
   `;
@@ -88,12 +80,8 @@ export const FinancialTips = ({
                   </div>
                 </div>
                 <div className="flex-grow">
-                  <h3 className="font-semibold text-lg text-default-900 mb-2">
-                    {tip?.title}
-                  </h3>
-                  <p className="text-default-600 leading-relaxed">
-                    {tip?.content}
-                  </p>
+                  <h3 className="font-semibold text-lg text-default-900 mb-2">{tip?.title}</h3>
+                  <p className="text-default-600 leading-relaxed">{tip?.content}</p>
                 </div>
               </div>
             ))}

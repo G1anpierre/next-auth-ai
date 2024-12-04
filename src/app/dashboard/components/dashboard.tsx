@@ -9,9 +9,12 @@ import { sectionItemsWithTeams } from "./sidebar-items";
 
 import Sidebar from "./sidebar";
 import { usePathname } from "next/navigation";
+import { useSession } from "next-auth/react";
+import { signOut } from "@/actions/sign-out";
 
 export const Dashboard = ({ children }: { children: React.ReactNode }) => {
   const [isHidden, setIsHidden] = React.useState(false);
+  const session = useSession();
   const pathname = usePathname();
   const currentPath = pathname.split("/")?.[1];
 
@@ -27,24 +30,16 @@ export const Dashboard = ({ children }: { children: React.ReactNode }) => {
       >
         <div className="flex items-center gap-2 px-2">
           <div className="flex h-8 w-8 items-center justify-center rounded-full bg-foreground">
-            <Icon
-              className="text-background"
-              icon="solar:wallet-line-duotone"
-              width={24}
-            />
+            <Icon className="text-background" icon="solar:wallet-line-duotone" width={24} />
           </div>
           <span className="text-small font-bold uppercase">Acme</span>
         </div>
         <Spacer y={8} />
         <div className="flex items-center gap-3 px-3">
-          <Avatar
-            isBordered
-            size="sm"
-            src="https://i.pravatar.cc/150?u=a04258114e29026708c"
-          />
+          <Avatar isBordered size="sm" src={session.data?.user?.image || ""} />
           <div className="flex flex-col">
-            <p className="text-small font-medium text-default-600">John Doe</p>
-            <p className="text-tiny text-default-400">Product Designer</p>
+            <p className="text-small font-medium text-default-600">{session.data?.user?.name}</p>
+            <p className="text-tiny text-default-400">{session.data?.user?.email}</p>
           </div>
         </div>
         <ScrollShadow className="-mr-6 h-full max-h-full py-6 pr-6">
@@ -63,11 +58,7 @@ export const Dashboard = ({ children }: { children: React.ReactNode }) => {
             fullWidth
             className="justify-start text-default-500 data-[hover=true]:text-foreground"
             startContent={
-              <Icon
-                className="text-default-500"
-                icon="solar:info-circle-line-duotone"
-                width={24}
-              />
+              <Icon className="text-default-500" icon="solar:info-circle-line-duotone" width={24} />
             }
             variant="light"
           >
@@ -83,6 +74,7 @@ export const Dashboard = ({ children }: { children: React.ReactNode }) => {
               />
             }
             variant="light"
+            onPress={async () => await signOut()}
           >
             Log Out
           </Button>
@@ -90,12 +82,7 @@ export const Dashboard = ({ children }: { children: React.ReactNode }) => {
       </div>
       <div className="w-full flex-1 flex-col p-4">
         <header className="flex items-center gap-3 rounded-medium border-small border-divider p-4">
-          <Button
-            isIconOnly
-            size="sm"
-            variant="light"
-            onPress={() => setIsHidden(!isHidden)}
-          >
+          <Button isIconOnly size="sm" variant="light" onPress={() => setIsHidden(!isHidden)}>
             <Icon
               className="text-default-500"
               height={24}

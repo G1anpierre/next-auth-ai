@@ -4,6 +4,7 @@ import { createBudgetAction } from "@/actions/expenpence-actions";
 import { Card, CardBody, CardHeader, Chip, Input } from "@nextui-org/react";
 import React, { useEffect, useState } from "react";
 import { Budget as BudgetType } from "@prisma/client";
+import { formatCurrency } from "@/utils/format-currency";
 
 export const Budget = ({
   budget,
@@ -63,7 +64,11 @@ export const Budget = ({
         />
         <div className="flex justify-between">
           <p className="font-bold">Available for Goals</p>
-          <p className="font-bold">$0.00</p>
+          <p className="font-bold">
+            {income - totalExpenses > 0
+              ? `${formatCurrency(income - totalExpenses)}`
+              : "No available funds"}
+          </p>
         </div>
         <div>
           <Chip color="success">Budget Allocation</Chip>

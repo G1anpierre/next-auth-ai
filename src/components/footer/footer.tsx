@@ -45,37 +45,27 @@ const socialItems = [
   {
     name: "Facebook",
     href: "#",
-    icon: (props: SocialIconProps) => (
-      <Icon {...props} icon="fontisto:facebook" />
-    ),
+    icon: (props: SocialIconProps) => <Icon {...props} icon="fontisto:facebook" />,
   },
   {
     name: "Instagram",
     href: "#",
-    icon: (props: SocialIconProps) => (
-      <Icon {...props} icon="fontisto:instagram" />
-    ),
+    icon: (props: SocialIconProps) => <Icon {...props} icon="fontisto:instagram" />,
   },
   {
     name: "Twitter",
     href: "#",
-    icon: (props: SocialIconProps) => (
-      <Icon {...props} icon="fontisto:twitter" />
-    ),
+    icon: (props: SocialIconProps) => <Icon {...props} icon="fontisto:twitter" />,
   },
   {
     name: "GitHub",
     href: "#",
-    icon: (props: SocialIconProps) => (
-      <Icon {...props} icon="fontisto:github" />
-    ),
+    icon: (props: SocialIconProps) => <Icon {...props} icon="fontisto:github" />,
   },
   {
     name: "YouTube",
     href: "#",
-    icon: (props: SocialIconProps) => (
-      <Icon {...props} icon="fontisto:youtube-play" />
-    ),
+    icon: (props: SocialIconProps) => <Icon {...props} icon="fontisto:youtube-play" />,
   },
 ];
 
@@ -104,12 +94,7 @@ export const Footer = () => {
         <Spacer y={6} />
         <div className="flex justify-center gap-x-4">
           {socialItems.map((item) => (
-            <Link
-              key={item.name}
-              isExternal
-              className="text-default-400"
-              href={item.href}
-            >
+            <Link key={item.name} isExternal className="text-default-400" href={item.href}>
               <span className="sr-only">{item.name}</span>
               <item.icon aria-hidden="true" className="w-5" />
             </Link>

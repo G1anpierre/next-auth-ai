@@ -5,10 +5,7 @@ import { auth } from "@/auth";
 import { revalidatePath } from "next/cache";
 
 // Create a Goal
-export const createGoalAction = async (
-  previousState: any,
-  formData: FormData
-) => {
+export const createGoalAction = async (previousState: any, formData: FormData) => {
   // Get the current session
   try {
     const session = await auth();

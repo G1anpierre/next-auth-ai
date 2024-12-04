@@ -2,12 +2,7 @@
 
 import React from "react";
 import { Input } from "@nextui-org/react";
-import {
-  Select,
-  SelectSection,
-  SelectItem,
-  DatePicker,
-} from "@nextui-org/react";
+import { Select, SelectSection, SelectItem, DatePicker } from "@nextui-org/react";
 import { Button } from "@nextui-org/react";
 import { SelectCategoryOptions } from "@/mock-data";
 import { useActionState } from "react";
@@ -25,10 +20,7 @@ const SelectPriorityOptions = [
 ];
 
 export const FormInputSection = () => {
-  const [state, actionCreateGoal, isPending] = useActionState(
-    createGoalAction,
-    initialState
-  );
+  const [state, actionCreateGoal, isPending] = useActionState(createGoalAction, initialState);
 
   return (
     <form action={actionCreateGoal}>

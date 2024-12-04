@@ -88,11 +88,7 @@ export const Nav = () => {
           <NavbarMenuItem key={`${item}-${index}`}>
             <Link
               color={
-                index === 2
-                  ? "primary"
-                  : index === menuItems.length - 1
-                  ? "danger"
-                  : "foreground"
+                index === 2 ? "primary" : index === menuItems.length - 1 ? "danger" : "foreground"
               }
               className="w-full"
               href="#"

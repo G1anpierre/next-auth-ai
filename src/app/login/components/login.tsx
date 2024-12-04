@@ -14,10 +14,7 @@ export const Login = () => {
     <div className="flex h-full w-full items-center justify-center">
       <div className="flex w-full max-w-sm flex-col gap-4 rounded-large bg-content1 px-8 pb-10 pt-6 shadow-small">
         <p className="pb-2 text-xl font-medium">Log In</p>
-        <form
-          className="flex flex-col gap-3"
-          onSubmit={(e) => e.preventDefault()}
-        >
+        <form className="flex flex-col gap-3" onSubmit={(e) => e.preventDefault()}>
           <Input
             label="Email Address"
             name="email"
@@ -73,13 +70,7 @@ export const Login = () => {
           </Button>
           <form action={signInGithub} className="flex-1">
             <Button
-              startContent={
-                <Icon
-                  className="text-default-500"
-                  icon="fe:github"
-                  width={24}
-                />
-              }
+              startContent={<Icon className="text-default-500" icon="fe:github" width={24} />}
               fullWidth
               type="submit"
               variant="bordered"

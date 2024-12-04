@@ -4,14 +4,9 @@ import { auth } from "@/auth";
 import { prisma } from "@/prisma";
 import { revalidatePath } from "next/cache";
 
-export const createExpenseAction = async (
-  previousState: any,
-  formData: FormData
-) => {
+export const createExpenseAction = async (previousState: any, formData: FormData) => {
   try {
     const session = await auth();
-
-    console.log("session :", session);
 
     if (!session?.user?.id) {
       return {
@@ -66,32 +61,63 @@ export const getExpensesAction = async () => {
       };
     }
 
-    const [expenses, aggregations] = await Promise.all([
-      prisma.expense.findMany({
-        where: {
-          userId: session.user.id,
-        },
-        orderBy: [{ createdAt: "desc" }],
-      }),
-      prisma.expense.aggregate({
-        where: {
-          userId: session.user.id,
-        },
-        _sum: {
-          amount: true,
-        },
-      }),
-    ]);
+    const expenses = await prisma.expense.findMany({
+      where: {
+        userId: session.user.id,
+      },
+      orderBy: [{ createdAt: "desc" }],
+    });
+
+    const totalExpenses = await prisma.expense.aggregate({
+      where: {
+        userId: session.user.id,
+      },
+      _sum: {
+        amount: true,
+      },
+    });
 
     return {
       data: expenses,
-      totalExpenses: aggregations._sum.amount,
+      totalExpenses: totalExpenses._sum.amount,
       success: true,
     };
   } catch (error) {
     console.log("error", error);
     return {
       message: "An error occurred while fetching the expenses",
+      success: false,
+    };
+  }
+};
+
+export const deleteExpenseAction = async (id: number) => {
+  try {
+    const session = await auth();
+
+    if (!session?.user?.id) {
+      return {
+        message: "You must be logged in to delete an expense",
+        success: false,
+      };
+    }
+
+    await prisma.expense.delete({
+      where: {
+        id,
+      },
+    });
+
+    revalidatePath("/dashboard/expenses");
+
+    return {
+      message: "Expense deleted successfully!",
+      success: true,
+    };
+  } catch (error) {
+    console.log("error", error);
+    return {
+      message: "An error occurred while deleting the expense",
       success: false,
     };
   }

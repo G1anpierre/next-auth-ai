@@ -17,8 +17,7 @@ export type TeamMember = {
   };
 };
 
-export type TeamMemberCardProps = React.HTMLAttributes<HTMLDivElement> &
-  TeamMember;
+export type TeamMemberCardProps = React.HTMLAttributes<HTMLDivElement> & TeamMember;
 
 const TeamMemberCard = React.forwardRef<HTMLDivElement, TeamMemberCardProps>(
   ({ children, avatar, name, role, bio, social, className, ...props }, ref) => (

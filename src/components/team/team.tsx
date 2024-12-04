@@ -116,8 +116,7 @@ export const Team = () => {
         <h1 className="text-4xl font-medium tracking-tight">Meet our team.</h1>
         <Spacer y={4} />
         <h2 className="text-large text-default-500">
-          Our philosophy is to build a great team and then empower them to do
-          great things.
+          Our philosophy is to build a great team and then empower them to do great things.
         </h2>
         <Spacer y={4} />
         <div className="flex w-full justify-center gap-2">

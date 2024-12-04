@@ -1,6 +1,5 @@
 import React from "react";
 import { Dashboard } from "./components/dashboard";
-import { getGoalsAction } from "@/actions/goal-actions";
 import { redirect } from "next/navigation";
 import { auth } from "@/auth";
 

@@ -20,12 +20,7 @@ export const tiers: Array<Tier> = [
     featured: false,
     mostPopular: false,
     description: "For starters and hobbyists that want to try out.",
-    features: [
-      "10 users included",
-      "2 GB of storage",
-      "Help center access",
-      "Email support",
-    ],
+    features: ["10 users included", "2 GB of storage", "Help center access", "Email support"],
     buttonText: "Continue with Free",
     buttonColor: "default",
     buttonVariant: "flat",

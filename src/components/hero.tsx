@@ -31,8 +31,8 @@ export const Hero = () => {
           </div>
         </div>
         <p className="text-center font-normal leading-7 text-default-500 sm:w-[466px] sm:text-[18px]">
-          Take control of your finances effortlessly. Track expenses, manage
-          budgets, and achieve your financial goals with the power of AI.
+          Take control of your finances effortlessly. Track expenses, manage budgets, and achieve
+          your financial goals with the power of AI.
         </p>
         <div className="flex flex-col items-center justify-center gap-6 sm:flex-row">
           <Button

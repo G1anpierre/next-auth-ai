@@ -16,8 +16,7 @@ const faqs = [
   },
   {
     title: "What is your refund policy?",
-    content:
-      "We do not provide refunds. However, we can help you with any issues you may have.",
+    content: "We do not provide refunds. However, we can help you with any issues you may have.",
   },
   {
     title: "Can I cancel my subscription?",
