@@ -4,11 +4,14 @@ import { Pricing } from "@/components/price";
 import { Team } from "@/components/team/team";
 import { Faqs } from "@/components/faqs";
 import { Nav } from "@/components/nav";
+import { auth } from "@/auth";
 
-export default function Home() {
+export default async function Home() {
+  const session = await auth();
+
   return (
     <>
-      <Nav />
+      <Nav session={session} />
       <div className="mt-40">
         <Hero />
         <Team />

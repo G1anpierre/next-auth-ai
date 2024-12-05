@@ -6,7 +6,6 @@ import { Icon } from "@iconify/react";
 import { cn } from "@nextui-org/react";
 
 import PromptInput from "./prompt-input";
-import { ideas } from "@/utils/data";
 
 export const Prompt = ({
   input,
@@ -23,23 +22,6 @@ export const Prompt = ({
 
   return (
     <div className="flex w-full flex-col gap-4">
-      <ScrollShadow hideScrollBar className="flex flex-nowrap gap-2" orientation="horizontal">
-        <div className="flex gap-2">
-          {ideas.map(({ title, description }, index) => (
-            <Button
-              key={index}
-              className="flex h-14 flex-col items-start gap-0"
-              variant="flat"
-              onPress={() => {
-                setPrompt(title);
-              }}
-            >
-              <p>{title}</p>
-              <p className="text-default-500">{description}</p>
-            </Button>
-          ))}
-        </div>
-      </ScrollShadow>
       <form
         onSubmit={(event) => {
           handleSubmit(event, {

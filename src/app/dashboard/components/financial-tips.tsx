@@ -11,7 +11,11 @@ export const FinancialTips = ({
   budget,
 }: {
   goals: Goal[];
-  budget: { income: number; expenses: number };
+  budget: {
+    income: number;
+    totalExpenses: number;
+    detailExpenses?: { name: string; amount: number }[];
+  };
 }) => {
   const { object, submit, isLoading } = useObject({
     api: "/api/ai/financial-tips",
@@ -29,8 +33,15 @@ export const FinancialTips = ({
   const generateTips = () => {
     const prompt = `Based on the following financial information, provide 6 personalized financial tips:
     monthly income: $${budget.income}
-    monthly expenses: $${budget.expenses}
-    available cash: $${budget.income - budget.expenses}
+    monthly expenses: $${budget.totalExpenses}
+    ${
+      budget.detailExpenses
+        ? `Detailed expenses: ${budget.detailExpenses
+            .map((expense) => `${expense.name}: $${expense.amount}`)
+            .join(", ")}`
+        : ""
+    }
+    available cash: $${budget.income - budget.totalExpenses}
     Goals: ${goals
       .map(
         (goal) =>

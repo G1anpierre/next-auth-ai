@@ -4,15 +4,17 @@ import MessageCard from "./message-card";
 import { Card, CardBody, CardFooter } from "@nextui-org/react";
 import { Prompt } from "../prompt/prompt";
 import { useChat } from "ai/react";
-import { Budget as BudgetType, Expense } from "@prisma/client";
+import { Budget as BudgetType, Expense, Goal } from "@prisma/client";
 import { convert } from "html-to-text";
 
 export const Chat = ({
   budget,
   expenses,
+  goals,
 }: {
   budget: BudgetType | undefined | null;
   expenses: Expense[];
+  goals: Goal[];
 }) => {
   const { messages, input, handleInputChange, handleSubmit } = useChat({
     api: "/api/ai/chat",
@@ -23,6 +25,12 @@ export const Chat = ({
     expenses: expenses.map((expense) => ({
       name: expense.category,
       amount: expense.amount,
+    })),
+    goals: goals.map((goal) => ({
+      name: goal.name,
+      current: goal.current,
+      target: goal.target,
+      targetDate: goal.targetDate,
     })),
   });
 

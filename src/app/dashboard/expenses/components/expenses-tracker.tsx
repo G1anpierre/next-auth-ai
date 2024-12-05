@@ -1,5 +1,7 @@
 "use client";
 import { createExpenseAction } from "@/actions/expenpence-actions";
+import { SelectExpensesOptions } from "@/utils/data";
+import { formatValue } from "@/utils/format-currency";
 import {
   Card,
   CardHeader,
@@ -10,38 +12,44 @@ import {
   Autocomplete,
   AutocompleteItem,
 } from "@nextui-org/react";
+import { Expense } from "@prisma/client";
 import { useActionState } from "react";
 
 import React from "react";
+import { CircleChartCard } from "./circle-chart-card";
 
 const initialState = {
   message: "",
   success: false,
 };
 
-const SelectExpensesOptions = [
-  { key: "food", value: "Food" },
-  { key: "transportation", value: "Transportation" },
-  { key: "housing", value: "Housing" },
-  { key: "utilities", value: "Utilities" },
-  { key: "entertainment", value: "Entertainment" },
-  { key: "health", value: "Health" },
-  { key: "education", value: "Education" },
-  { key: "other", value: "Other" },
-];
-
-export const ExpensesTracker = () => {
+export const ExpensesTracker = ({ expenses }: { expenses: Expense[] }) => {
   const [isSelected, setIsSelected] = React.useState(false);
 
   const [state, actionCreateExpense, isPending] = useActionState(createExpenseAction, initialState);
 
   return (
-    <form action={actionCreateExpense}>
-      <Card>
-        <CardHeader className="flex flex-col gap-1 items-start">
+    <Card>
+      <CardHeader className="flex flex-col gap-4">
+        <div className="flex flex-col gap-1 items-start basis-1/2">
           <h1 className="text-2xl font-bold">Expenses</h1>
           <p className="text-base text-default-500">Track your expenses</p>
-        </CardHeader>
+        </div>
+        <div className="basis-1/2">
+          <CircleChartCard
+            title="Total Expenses"
+            value={formatValue(expenses.reduce((acc, expense) => acc + expense.amount, 0))}
+            unit="avg."
+            color="primary"
+            categories={expenses.map((expense) => expense.category)}
+            chartData={expenses.map((expense) => ({
+              name: expense.category,
+              value: expense.amount,
+            }))}
+          />
+        </div>
+      </CardHeader>
+      <form action={actionCreateExpense}>
         <CardBody className="flex flex-col gap-4">
           <div className="flex gap-4 flex-wrap">
             {/* <Select
@@ -80,7 +88,7 @@ export const ExpensesTracker = () => {
             </Button>
           </div>
         </CardBody>
-      </Card>
-    </form>
+      </form>
+    </Card>
   );
 };

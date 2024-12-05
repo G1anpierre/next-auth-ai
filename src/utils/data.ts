@@ -33,3 +33,14 @@ export const ideas = [
     description: "calculate monthly commitments",
   },
 ];
+
+export const SelectExpensesOptions = [
+  { key: "food", value: "Food" },
+  { key: "transportation", value: "Transportation" },
+  { key: "housing", value: "Housing" },
+  { key: "utilities", value: "Utilities" },
+  { key: "entertainment", value: "Entertainment" },
+  { key: "health", value: "Health" },
+  { key: "education", value: "Education" },
+  { key: "other", value: "Other" },
+];

@@ -5,14 +5,21 @@ import GoalsSection from "./components/goals-section";
 import { BudgetOverview } from "./components/budget-overview";
 import { FinancialTips } from "./components/financial-tips";
 import { getGoalsAction } from "@/actions/goal-actions";
+import { getBudgetAction, getExpensesAction } from "@/actions/expenpence-actions";
 
 const DashboardPage = async () => {
   const response = await getGoalsAction();
+  const { totalExpenses, data: expenses } = await getExpensesAction();
+  const { data: income } = await getBudgetAction();
 
   // temporary data
   const budget = {
-    income: 5700,
-    expenses: 3000,
+    income: income?.income ?? 0,
+    totalExpenses: totalExpenses ?? 0,
+    detailExpenses: expenses?.map((expense) => ({
+      name: expense.category,
+      amount: expense.amount,
+    })),
   };
 
   return (

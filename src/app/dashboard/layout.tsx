@@ -12,7 +12,7 @@ const DashboardLayout = async ({ children }: { children: React.ReactNode }) => {
 
   return (
     <div>
-      <Dashboard>{children}</Dashboard>
+      <Dashboard session={session}>{children}</Dashboard>
     </div>
   );
 };

@@ -4,7 +4,11 @@ import React from "react";
 import { Card, CardHeader, CardBody } from "@nextui-org/react";
 import { formatCurrency } from "@/utils/format-currency";
 
-export const BudgetOverview = ({ budget }: { budget: { income: number; expenses: number } }) => {
+export const BudgetOverview = ({
+  budget,
+}: {
+  budget: { income: number; totalExpenses: number };
+}) => {
   return (
     <Card>
       <CardHeader>
@@ -19,8 +23,8 @@ export const BudgetOverview = ({ budget }: { budget: { income: number; expenses:
           </div>
           <div className="flex flex-col gap-2">
             <p>{formatCurrency(budget.income)}</p>
-            <p>{formatCurrency(budget.expenses)}</p>
-            <p className="font-bold">{formatCurrency(budget.income - budget.expenses)}</p>
+            <p>{formatCurrency(budget.totalExpenses)}</p>
+            <p className="font-bold">{formatCurrency(budget.income - budget.totalExpenses)}</p>
           </div>
         </div>
       </CardBody>

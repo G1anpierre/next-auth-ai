@@ -12,6 +12,7 @@ import React from "react";
 import { Listbox, Tooltip, ListboxItem, ListboxSection } from "@nextui-org/react";
 import { Icon } from "@iconify/react";
 import { cn } from "@nextui-org/react";
+import NextLink from "next/link";
 
 export enum SidebarItemType {
   Nest = "nest",
@@ -45,7 +46,6 @@ const Sidebar = React.forwardRef<HTMLElement, SidebarProps>(
     {
       items,
       isCompact,
-      defaultSelectedKey,
       onSelect,
       hideEndContent,
       sectionClasses: sectionClassesProp = {},
@@ -57,7 +57,9 @@ const Sidebar = React.forwardRef<HTMLElement, SidebarProps>(
     },
     ref
   ) => {
-    const [selected, setSelected] = React.useState<React.Key>(defaultSelectedKey);
+    const handleAction = (key: string) => {
+      onSelect?.(key);
+    };
 
     const sectionClasses = {
       ...sectionClassesProp,
@@ -251,7 +253,6 @@ const Sidebar = React.forwardRef<HTMLElement, SidebarProps>(
     return (
       <Listbox
         key={isCompact ? "compact" : "default"}
-        ref={ref}
         hideSelectedIcon
         className={cn("list-none", className)}
         classNames={{
@@ -271,14 +272,9 @@ const Sidebar = React.forwardRef<HTMLElement, SidebarProps>(
           ),
         }}
         items={items}
-        selectedKeys={[selected] as unknown as Selection}
-        selectionMode="single"
         variant="flat"
-        onSelectionChange={(keys) => {
-          const key = Array.from(keys)[0];
-
-          setSelected(key as React.Key);
-          onSelect?.(key as string);
+        onAction={(key) => {
+          handleAction(key as string);
         }}
         {...props}
       >

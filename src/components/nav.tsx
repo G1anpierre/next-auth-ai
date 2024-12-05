@@ -11,12 +11,11 @@ import {
   Link,
   Button,
 } from "@nextui-org/react";
-import { useSession } from "next-auth/react";
 import { signOut } from "@/actions/sign-out";
+import { Session } from "next-auth";
 
-export const Nav = () => {
+export const Nav = ({ session }: { session: Session | null }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { data: session } = useSession();
 
   const menuItems = [
     "Profile",

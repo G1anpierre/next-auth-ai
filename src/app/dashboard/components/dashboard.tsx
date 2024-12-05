@@ -9,12 +9,17 @@ import { sectionItemsWithTeams } from "./sidebar-items";
 
 import Sidebar from "./sidebar";
 import { usePathname } from "next/navigation";
-import { useSession } from "next-auth/react";
 import { signOut } from "@/actions/sign-out";
+import { Session } from "next-auth";
 
-export const Dashboard = ({ children }: { children: React.ReactNode }) => {
+export const Dashboard = ({
+  session,
+  children,
+}: {
+  session: Session;
+  children: React.ReactNode;
+}) => {
   const [isHidden, setIsHidden] = React.useState(false);
-  const session = useSession();
   const pathname = usePathname();
   const currentPath = pathname.split("/")?.[1];
 
@@ -36,10 +41,10 @@ export const Dashboard = ({ children }: { children: React.ReactNode }) => {
         </div>
         <Spacer y={8} />
         <div className="flex items-center gap-3 px-3">
-          <Avatar isBordered size="sm" src={session.data?.user?.image || ""} />
+          <Avatar isBordered size="sm" src={session?.user?.image || ""} />
           <div className="flex flex-col">
-            <p className="text-small font-medium text-default-600">{session.data?.user?.name}</p>
-            <p className="text-tiny text-default-400">{session.data?.user?.email}</p>
+            <p className="text-small font-medium text-default-600">{session?.user?.name}</p>
+            <p className="text-tiny text-default-400">{session?.user?.email}</p>
           </div>
         </div>
         <ScrollShadow className="-mr-6 h-full max-h-full py-6 pr-6">

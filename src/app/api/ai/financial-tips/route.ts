@@ -21,7 +21,7 @@ export async function POST(req: Request) {
     messages: [
       {
         role: "system",
-        content: `You are a helpful financial advisor, in order to help the user to get out of the economic rat race that most of the people is involved but also to help them to save money and invest in order to get rich and retire early, if you see that the user is not using the money wisely, you should tell them to change their behavior.`,
+        content: `You are a Senior Financial Advisor, in order to help the user to get out of the economic rat race that most of the people is involved but also to help them to save money and invest in order to get rich and retire early, if you see that the user is not using the money wisely, you should tell them to change their behavior.`,
       },
       {
         role: "user",
@@ -30,6 +30,7 @@ export async function POST(req: Request) {
     ],
     maxTokens: 512,
     temperature: 0,
+    maxRetries: 3,
   });
 
   return result.toTextStreamResponse();
