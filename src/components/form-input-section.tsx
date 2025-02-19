@@ -1,9 +1,9 @@
 "use client";
 
 import React from "react";
-import { Input } from "@nextui-org/react";
-import { Select, SelectSection, SelectItem, DatePicker } from "@nextui-org/react";
-import { Button } from "@nextui-org/react";
+import { Input } from "@heroui/react";
+import { Select, SelectSection, SelectItem, DatePicker } from "@heroui/react";
+import { Button } from "@heroui/react";
 import { SelectCategoryOptions } from "@/mock-data";
 import { useActionState } from "react";
 import { createGoalAction } from "@/actions/goal-actions";
@@ -32,7 +32,7 @@ export const FormInputSection = () => {
           <Select placeholder="Priority" className="max-w-xs" name="priority">
             <SelectSection>
               {SelectPriorityOptions.map((option) => (
-                <SelectItem key={option.key} value={option.key}>
+                <SelectItem key={option.key} >
                   {option.value}
                 </SelectItem>
               ))}
@@ -41,7 +41,7 @@ export const FormInputSection = () => {
           <Select placeholder="Category" className="max-w-xs" name="category">
             <SelectSection>
               {SelectCategoryOptions.map((option) => (
-                <SelectItem key={option.key} value={option.key}>
+                <SelectItem key={option.key}>
                   {option.value}
                 </SelectItem>
               ))}

@@ -10,7 +10,7 @@ import {
   TableRow,
   Chip,
   Tooltip,
-} from "@nextui-org/react";
+} from "@heroui/react";
 import React from "react";
 import { Expense } from "@prisma/client";
 import { Trash2, Pencil } from "lucide-react";

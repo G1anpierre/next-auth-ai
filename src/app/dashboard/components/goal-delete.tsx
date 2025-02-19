@@ -1,5 +1,5 @@
 import { deleteGoalAction } from "@/actions/goal-actions";
-import { Button } from "@nextui-org/react";
+import { Button } from "@heroui/react";
 import React, { useActionState } from "react";
 
 export const GoalDelete = ({ goalId }: { goalId: number }) => {

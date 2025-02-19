@@ -1,5 +1,5 @@
 import { updateGoalAction } from "@/actions/goal-actions";
-import { Button, Input } from "@nextui-org/react";
+import { Button, Input } from "@heroui/react";
 import React, { useActionState, useState } from "react";
 
 export const GoalUpdate = ({ goalId }: { goalId: number }) => {

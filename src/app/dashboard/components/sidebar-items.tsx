@@ -1,4 +1,4 @@
-import { Chip } from "@nextui-org/react";
+import { Chip } from "@heroui/react";
 import { Icon } from "@iconify/react";
 
 import { type SidebarItem, SidebarItemType } from "./sidebar";
@@ -72,7 +72,7 @@ export const sectionItems: SidebarItem[] = [
         key: "dashboard",
         href: "/dashboard",
         icon: "solar:sort-by-time-linear",
-        title: "Tracker",
+        title: "Dashboard",
       },
       {
         key: "expenses",

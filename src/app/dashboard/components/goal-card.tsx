@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Card, CardHeader, CardBody, CardFooter, Progress } from "@nextui-org/react";
+import { Card, CardHeader, CardBody, CardFooter, Progress } from "@heroui/react";
 import { Goal } from "@prisma/client";
 import { formatCurrency } from "@/utils/format-currency";
 import { GoalDelete } from "./goal-delete";

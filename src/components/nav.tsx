@@ -10,7 +10,7 @@ import {
   NavbarMenuItem,
   Link,
   Button,
-} from "@nextui-org/react";
+} from "@heroui/react";
 import { signOut } from "@/actions/sign-out";
 import { Session } from "next-auth";
 

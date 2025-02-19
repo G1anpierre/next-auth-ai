@@ -7,11 +7,11 @@ import {
   type ListboxProps,
   type ListboxSectionProps,
   type Selection,
-} from "@nextui-org/react";
+} from "@heroui/react";
 import React from "react";
-import { Listbox, Tooltip, ListboxItem, ListboxSection } from "@nextui-org/react";
+import { Listbox, Tooltip, ListboxItem, ListboxSection } from "@heroui/react";
 import { Icon } from "@iconify/react";
-import { cn } from "@nextui-org/react";
+import { cn } from "@heroui/react";
 import NextLink from "next/link";
 
 export enum SidebarItemType {
@@ -206,7 +206,7 @@ const Sidebar = React.forwardRef<HTMLElement, SidebarProps>(
 
         return (
           <ListboxItem
-            {...item}
+            // {...item}
             key={item.key}
             endContent={isCompact || hideEndContent ? null : (item.endContent ?? null)}
             startContent={
@@ -223,8 +223,9 @@ const Sidebar = React.forwardRef<HTMLElement, SidebarProps>(
                 (item.startContent ?? null)
               )
             }
-            textValue={item.title}
+            // textValue={item.title}
             title={isCompact ? null : item.title}
+            href={item.href}
           >
             {isCompact ? (
               <Tooltip content={item.title} placement="right">

@@ -1,7 +1,7 @@
 "use client";
 
 import MessageCard from "./message-card";
-import { Card, CardBody, CardFooter } from "@nextui-org/react";
+import { Card, CardBody, CardFooter } from "@heroui/react";
 import { Prompt } from "../prompt/prompt";
 import { useChat } from "ai/react";
 import { Budget as BudgetType, Expense, Goal } from "@prisma/client";

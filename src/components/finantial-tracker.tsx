@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Card, CardHeader, CardBody } from "@nextui-org/react";
+import { Card, CardHeader, CardBody } from "@heroui/react";
 import { FormInputSection } from "./form-input-section";
 
 export const FinantialTracker = ({ children }: { children: React.ReactNode }) => {

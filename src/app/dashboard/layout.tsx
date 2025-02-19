@@ -1,3 +1,5 @@
+'use server';
+
 import React from "react";
 import { Dashboard } from "./components/dashboard";
 import { redirect } from "next/navigation";

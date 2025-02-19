@@ -12,7 +12,7 @@ import {
   cn,
   ButtonProps,
   CardProps,
-} from "@nextui-org/react";
+} from "@heroui/react";
 import { ResponsiveContainer, PieChart, Pie, Tooltip, Cell, Label } from "recharts";
 import { Icon } from "@iconify/react";
 import { formatValue } from "@/utils/format-currency";
@@ -212,7 +212,7 @@ export const CircleChartCard = React.forwardRef<
                             dy={
                               changeType === "positive" ? -1.5 : changeType === "negative" ? 1.5 : 0
                             }
-                            fill="hsl(var(--nextui-default-700))"
+                            fill="hsl(var(--heroui-default-700))"
                             fontSize={20}
                             fontWeight={600}
                           >

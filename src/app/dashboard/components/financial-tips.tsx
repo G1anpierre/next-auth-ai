@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Card, CardHeader, CardBody, CardFooter, Button } from "@nextui-org/react";
+import { Card, CardHeader, CardBody, CardFooter, Button } from "@heroui/react";
 import { Goal } from "@prisma/client";
 import { experimental_useObject as useObject } from '@ai-sdk/react';
 import { z } from "zod";

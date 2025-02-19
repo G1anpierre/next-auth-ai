@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Accordion, AccordionItem } from "@nextui-org/react";
+import { Accordion, AccordionItem } from "@heroui/react";
 import { Icon } from "@iconify/react";
 
 import faqs from "./faqs-mockup";
@@ -22,7 +22,6 @@ export const Faqs = () => {
         </div>
         <Accordion
           fullWidth
-          keepContentMounted
           className="gap-3"
           itemClasses={{
             base: "px-0 sm:px-6",

@@ -11,7 +11,7 @@ import {
   Button,
   Autocomplete,
   AutocompleteItem,
-} from "@nextui-org/react";
+} from "@heroui/react";
 import { Expense } from "@prisma/client";
 import { useActionState } from "react";
 

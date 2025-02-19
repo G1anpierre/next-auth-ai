@@ -1,9 +1,9 @@
 "use client";
 
 import React from "react";
-import { Avatar, Button, ScrollShadow, Spacer } from "@nextui-org/react";
+import { Avatar, Button, ScrollShadow, Spacer } from "@heroui/react";
 import { Icon } from "@iconify/react";
-import { cn } from "@nextui-org/react";
+import { cn } from "@heroui/react";
 
 import { sectionItemsWithTeams } from "./sidebar-items";
 
@@ -11,6 +11,7 @@ import Sidebar from "./sidebar";
 import { usePathname } from "next/navigation";
 import { signOut } from "@/actions/sign-out";
 import { Session } from "next-auth";
+import { OpenClose } from "./open-close";
 
 export const Dashboard = ({
   session,
@@ -22,6 +23,10 @@ export const Dashboard = ({
   const [isHidden, setIsHidden] = React.useState(false);
   const pathname = usePathname();
   const currentPath = pathname.split("/")?.[1];
+
+  const toggleSidebar = () => {
+    setIsHidden(!isHidden);
+  };
 
   return (
     <div className="flex w-full h-dvh">
@@ -85,24 +90,9 @@ export const Dashboard = ({
           </Button>
         </div>
       </div>
-      <div className="w-full flex-1 flex-col p-4">
-        <header className="flex items-center gap-3 rounded-medium border-small border-divider p-4">
-          <Button isIconOnly size="sm" variant="light" onPress={() => setIsHidden(!isHidden)}>
-            <Icon
-              className="text-default-500"
-              height={24}
-              icon="solar:sidebar-minimalistic-outline"
-              width={24}
-            />
-          </Button>
-          <h2 className="text-medium font-medium text-default-700">Overview</h2>
-        </header>
-        <main className="mt-4 h-full w-full overflow-visible">
-          <div className="flex h-[90%] w-full flex-col gap-4 rounded-medium border-small border-divider">
-            {children}
-          </div>
-        </main>
-      </div>
+      <OpenClose toggleSideBar={toggleSidebar}>
+        {children}
+      </OpenClose>
     </div>
   );
 };

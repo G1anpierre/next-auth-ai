@@ -1,7 +1,7 @@
 "use client";
 
 import { createBudgetAction } from "@/actions/expenpence-actions";
-import { Card, CardBody, CardHeader, Chip, Input } from "@nextui-org/react";
+import { Card, CardBody, CardHeader, Chip, Input } from "@heroui/react";
 import React, { useEffect, useState } from "react";
 import { Budget as BudgetType } from "@prisma/client";
 import { formatCurrency } from "@/utils/format-currency";
