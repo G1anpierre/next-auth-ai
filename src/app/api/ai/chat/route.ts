@@ -1,4 +1,5 @@
-import { xai } from "@ai-sdk/xai";
+// import { xai } from "@ai-sdk/xai";
+import { openai } from '@ai-sdk/openai'
 import { streamText } from "ai";
 
 // Allow streaming responses up to 30 seconds
@@ -8,7 +9,7 @@ export async function POST(req: Request) {
   const { messages, financialData } = await req.json();
 
   const result = streamText({
-    model: xai("grok-beta"),
+    model: openai("gpt-3.5-turbo"),
     messages: [
       {
         role: "system",

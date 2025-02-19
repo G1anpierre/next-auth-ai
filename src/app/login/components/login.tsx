@@ -65,6 +65,7 @@ export const Login = () => {
           <Button
             startContent={<Icon icon="flat-color-icons:google" width={24} />}
             variant="bordered"
+            disabled
           >
             Continue with Google
           </Button>

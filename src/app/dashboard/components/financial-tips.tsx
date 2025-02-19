@@ -3,7 +3,7 @@
 import React from "react";
 import { Card, CardHeader, CardBody, CardFooter, Button } from "@nextui-org/react";
 import { Goal } from "@prisma/client";
-import { experimental_useObject as useObject } from "ai/react";
+import { experimental_useObject as useObject } from '@ai-sdk/react';
 import { z } from "zod";
 
 export const FinancialTips = ({
@@ -54,6 +54,7 @@ export const FinancialTips = ({
 
     submit(prompt);
   };
+
 
   return (
     <Card>

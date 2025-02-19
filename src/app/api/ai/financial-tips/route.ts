@@ -1,5 +1,6 @@
-import { xai } from "@ai-sdk/xai";
 
+// import { xai } from "@ai-sdk/xai";
+import { openai } from '@ai-sdk/openai'
 import { streamObject } from "ai";
 import { z } from "zod";
 
@@ -7,7 +8,7 @@ export async function POST(req: Request) {
   const prompt = await req.json();
 
   const result = streamObject({
-    model: xai("grok-beta"),
+    model: openai("gpt-3.5-turbo"),
     schema: z.object({
       tips: z.array(
         z.object({
