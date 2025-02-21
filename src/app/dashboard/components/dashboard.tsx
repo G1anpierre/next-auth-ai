@@ -3,7 +3,7 @@
 import React from "react";
 import { Avatar, Button, ScrollShadow, Spacer } from "@heroui/react";
 import { Icon } from "@iconify/react";
-import { cn } from "@heroui/react";
+import { cn, Link } from "@heroui/react";
 
 import { sectionItemsWithTeams } from "./sidebar-items";
 
@@ -42,7 +42,11 @@ export const Dashboard = ({
           <div className="flex h-8 w-8 items-center justify-center rounded-full bg-foreground">
             <Icon className="text-background" icon="solar:wallet-line-duotone" width={24} />
           </div>
+          <Link
+            href="/"
+            >
           <span className="text-small font-bold uppercase">Acme</span>
+          </Link>
         </div>
         <Spacer y={8} />
         <div className="flex items-center gap-3 px-3">

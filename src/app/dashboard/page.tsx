@@ -9,7 +9,7 @@ import { getGoalsAction } from "@/actions/goal-actions";
 import { getBudgetAction, getExpensesAction } from "@/actions/expenpence-actions";
 
 const DashboardPage = async () => {
-  const response = await getGoalsAction();
+  const { data: goals = [] } = await getGoalsAction();
   const { totalExpenses, data: expenses } = await getExpensesAction();
   const { data: income } = await getBudgetAction();
 
@@ -26,10 +26,10 @@ const DashboardPage = async () => {
   return (
     <div className="flex flex-col gap-4 ">
       <FinantialTracker>
-        <GoalsSection goals={response.data ?? []} />
+        <GoalsSection goals={goals} />
       </FinantialTracker>
       <BudgetOverview budget={budget} />
-      <FinancialTips goals={response.data ?? []} budget={budget} />
+      <FinancialTips goals={goals} budget={budget} />
     </div>
   );
 };

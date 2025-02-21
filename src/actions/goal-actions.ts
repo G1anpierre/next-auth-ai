@@ -1,8 +1,10 @@
-"use server";
+
 
 import { prisma } from "@/prisma";
 import { auth } from "@/auth";
 import { revalidatePath } from "next/cache";
+import { Goal } from "@prisma/client";
+import { GoalResponse } from "@/lib/definitions";
 
 // Create a Goal
 export const createGoalAction = async (previousState: any, formData: FormData) => {
@@ -57,13 +59,15 @@ export const createGoalAction = async (previousState: any, formData: FormData) =
   }
 };
 
+
 // Get all Goals
-export const getGoalsAction = async () => {
+export const getGoalsAction = async (): Promise<GoalResponse> => {
   try {
     const session = await auth();
 
     if (!session?.user?.id) {
       return {
+        data: [],
         message: "You must be logged in to view goals",
         success: false,
       };
@@ -83,6 +87,7 @@ export const getGoalsAction = async () => {
   } catch (error) {
     console.error("Error fetching goals:", error);
     return {
+      data: [],
       message: "An error occurred while fetching goals",
       success: false,
     };

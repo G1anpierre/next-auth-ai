@@ -1,4 +1,4 @@
-import { getGoalsAction } from "@/actions/goal-actions";
+
 import React from "react";
 import GoalCard from "./goal-card";
 import { Goal } from "@prisma/client";
