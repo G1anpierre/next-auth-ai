@@ -30,11 +30,6 @@ export const FormInputSection = () => {
     shouldRevalidate: "onInput",
   });
 
-  console.log("lastResults :", lastResult);
-  console.log("fields :", fields.priority.value);
-  console.log("fields :", fields.category.value);
-  console.log("fields :", fields.targetDate.value);
-
   return (
     <form id={form.id} action={actionCreateGoal} onSubmit={form.onSubmit} noValidate>
       <div className="flex flex-col gap-4">

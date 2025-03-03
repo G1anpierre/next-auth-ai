@@ -14,7 +14,6 @@ import { parseWithZod } from '@conform-to/zod';
 // Create a Goal
 export const createGoalAction = async (previousState: unknown, formData: FormData) => {
   // Get the current session
-  console.log('Submited: ')
   const submission = parseWithZod(formData, {
     schema: GoalSchema,
   })
@@ -42,7 +41,6 @@ export const createGoalAction = async (previousState: unknown, formData: FormDat
       return submission.reply();
     }
 
-    console.log('data received, ', goalName, targetAmount, category, targetDate, priority)
     // Create the goal using Prisma
     await prisma.goal.create({
       data: {
@@ -56,14 +54,14 @@ export const createGoalAction = async (previousState: unknown, formData: FormDat
       },
     });
 
-    revalidatePath("/dashboard");
-
+    
   } catch (error) {
     console.error("Error creating goal:", error);
     return submission.reply();
-    // revalidatePath("/dashboard");
-
+    
   }
+  
+  revalidatePath("/dashboard");
 };
 
 
