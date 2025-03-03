@@ -1,24 +1,37 @@
+"use server";
 
 
 import { prisma } from "@/prisma";
 import { auth } from "@/auth";
 import { revalidatePath } from "next/cache";
 import { Goal } from "@prisma/client";
-import { GoalResponse } from "@/lib/definitions";
+import { GoalResponse, GoalSchema } from "@/lib/definitions";
+import { parseWithZod } from '@conform-to/zod';
+
+// Zod schema for Goal
+
 
 // Create a Goal
-export const createGoalAction = async (previousState: any, formData: FormData) => {
+export const createGoalAction = async (previousState: unknown, formData: FormData) => {
   // Get the current session
+  console.log('Submited: ')
+  const submission = parseWithZod(formData, {
+    schema: GoalSchema,
+  })
+
+
   try {
     const session = await auth();
 
     if (!session?.user?.id) {
-      return {
-        message: "You must be logged in to create a goal",
-        success: false,
-      };
+      return submission.reply();
     }
 
+    
+    if (submission.status !== 'success') {
+      return submission.reply();
+    }
+    
     const goalName = formData.get("goalName");
     const targetAmount = formData.get("targetAmount");
     const category = formData.get("category");
@@ -26,14 +39,12 @@ export const createGoalAction = async (previousState: any, formData: FormData) =
     const priority = formData.get("priority");
 
     if (!goalName || !targetAmount || !category || !targetDate || !priority) {
-      return {
-        message: "Please fill out all fields",
-        success: false,
-      };
+      return submission.reply();
     }
 
+    console.log('data received, ', goalName, targetAmount, category, targetDate, priority)
     // Create the goal using Prisma
-    const goal = await prisma.goal.create({
+    await prisma.goal.create({
       data: {
         name: goalName.toString(),
         target: parseFloat(targetAmount.toString()),
@@ -46,16 +57,12 @@ export const createGoalAction = async (previousState: any, formData: FormData) =
     });
 
     revalidatePath("/dashboard");
-    return {
-      message: "Goal created successfully!",
-      success: true,
-    };
+
   } catch (error) {
     console.error("Error creating goal:", error);
-    return {
-      message: "An error occurred while creating the goal",
-      success: false,
-    };
+    return submission.reply();
+    // revalidatePath("/dashboard");
+
   }
 };
 
@@ -156,3 +163,4 @@ export const updateGoalAction = async (goalId: number, amount: number) => {
     };
   }
 };
+
