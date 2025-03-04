@@ -54,6 +54,7 @@ export const Budget = ({
           placeholder="0.00"
           labelPlacement="outside"
           isReadOnly
+          disabled
           defaultValue={totalExpenses.toString()}
           value={totalExpenses.toString()}
           startContent={

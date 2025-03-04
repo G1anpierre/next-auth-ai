@@ -16,3 +16,9 @@ export const GoalSchema = z.object({
   targetDate: z.date(),
   priority: z.string(),
 });
+
+export const ExpenseSchema = z.object({
+  categoryExpense: z.string(),
+  amountExpense: z.number(),
+  recurringExpense: z.boolean(),
+})

@@ -23,45 +23,45 @@ export const createGoalAction = async (previousState: unknown, formData: FormDat
     const session = await auth();
 
     if (!session?.user?.id) {
-      return submission.reply();
+      return submission.reply({
+        formErrors: ["You must be logged in to create a goal"]
+      });
     }
 
     
     if (submission.status !== 'success') {
       return submission.reply();
     }
+
+    const { goalName, targetAmount, category, targetDate, priority } = submission.value;
     
-    const goalName = formData.get("goalName");
-    const targetAmount = formData.get("targetAmount");
-    const category = formData.get("category");
-    const targetDate = formData.get("targetDate");
-    const priority = formData.get("priority");
-
-    if (!goalName || !targetAmount || !category || !targetDate || !priority) {
-      return submission.reply();
-    }
-
     // Create the goal using Prisma
     await prisma.goal.create({
       data: {
-        name: goalName.toString(),
-        target: parseFloat(targetAmount.toString()),
+        name: goalName,
+        target: targetAmount,
         current: 0, // Starting with 0 progress
-        category: category.toString(),
-        targetDate: new Date(targetDate.toString()),
-        priority: priority.toString(),
+        category: category,
+        targetDate: targetDate,
+        priority: priority,
         userId: session.user.id,
       },
     });
 
+    revalidatePath("/dashboard");
+
+    return submission.reply({
+      resetForm: true,
+    });
     
   } catch (error) {
     console.error("Error creating goal:", error);
-    return submission.reply();
+    return submission.reply({
+      formErrors: ["An error occurred while creating the goal"]
+    });
     
   }
   
-  revalidatePath("/dashboard");
 };
 
 
