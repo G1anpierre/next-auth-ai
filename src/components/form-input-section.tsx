@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { useForm } from "@conform-to/react";
+import { useForm, useInputControl } from "@conform-to/react";
 import { parseWithZod } from "@conform-to/zod";
 import { Input } from "@heroui/react";
 import { Select, SelectSection, SelectItem, DatePicker } from "@heroui/react";
@@ -29,6 +29,9 @@ export const FormInputSection = () => {
     shouldValidate: "onBlur",
     shouldRevalidate: "onInput",
   });
+
+  const priority = useInputControl(fields.priority);
+  const category = useInputControl(fields.category);
 
   return (
     <form id={form.id} action={actionCreateGoal} onSubmit={form.onSubmit} noValidate>
@@ -58,8 +61,14 @@ export const FormInputSection = () => {
             label="Select a Priority"
             placeholder="Priority"
             className="max-w-xs"
+            errorMessage={fields.targetAmount.errors}
+            isInvalid={!!fields.priority.value}
             key={fields.priority.key}
             name={fields.priority.name}
+            value={priority.value}
+            onChange={() => priority.change}
+            onFocus={priority.focus}
+            onBlur={priority.blur}
           >
             <SelectSection>
               {SelectPriorityOptions.map((option) => (
@@ -71,8 +80,14 @@ export const FormInputSection = () => {
             label="Select a Category"
             placeholder="Category"
             className="max-w-xs"
+            errorMessage={fields.category.errors}
+            isInvalid={!!fields.priority.value}
             key={fields.category.key}
             name={fields.category.name}
+            value={category.value}
+            onSelectionChange={() => category.change}
+            onFocus={category.focus}
+            onBlur={category.blur}
           >
             <SelectSection>
               {SelectCategoryOptions.map((option) => (
@@ -82,7 +97,7 @@ export const FormInputSection = () => {
           </Select>
           <DatePicker
             label="Target Date"
-            labelPlacement="outside-left"
+            labelPlacement="inside"
             className="max-w-xs"
             key={fields.targetDate.key}
             name={fields.targetDate.name}
