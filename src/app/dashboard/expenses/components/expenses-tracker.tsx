@@ -52,19 +52,6 @@ export const ExpensesTracker = ({ expenses }: { expenses: Expense[] }) => {
       <form action={actionCreateExpense}>
         <CardBody className="flex flex-col gap-4">
           <div className="flex gap-4 flex-wrap">
-            {/* <Select
-              placeholder="Category"
-              className="max-w-xs"
-              name="categoryExpense"
-            >
-              <SelectSection>
-                {SelectExpensesOptions.map((option) => (
-                  <SelectItem key={option.key} value={option.key}>
-                    {option.value}
-                  </SelectItem>
-                ))}
-              </SelectSection>
-            </Select> */}
             <Autocomplete
               placeholder="Category"
               allowsCustomValue
