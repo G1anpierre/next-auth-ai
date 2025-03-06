@@ -99,6 +99,8 @@ export const FormInputSection = () => {
             label="Target Date"
             labelPlacement="inside"
             className="max-w-xs"
+            isInvalid={!!fields.targetDate.errors?.length && fields.targetDate.value === undefined}
+            errorMessage={fields.targetDate.errors}
             key={fields.targetDate.key}
             name={fields.targetDate.name}
           />
