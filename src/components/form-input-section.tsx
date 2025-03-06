@@ -61,12 +61,12 @@ export const FormInputSection = () => {
             label="Select a Priority"
             placeholder="Priority"
             className="max-w-xs"
-            errorMessage={fields.targetAmount.errors}
-            isInvalid={!!fields.priority.value}
+            errorMessage={fields.priority.errors}
+            isInvalid={!!fields.priority.errors?.length}
             key={fields.priority.key}
             name={fields.priority.name}
-            value={priority.value}
-            onChange={() => priority.change}
+            selectedKeys={priority.value ? [priority.value] : []}
+            onChange={(e) => priority.change(e.target.value)}
             onFocus={priority.focus}
             onBlur={priority.blur}
           >
@@ -81,11 +81,11 @@ export const FormInputSection = () => {
             placeholder="Category"
             className="max-w-xs"
             errorMessage={fields.category.errors}
-            isInvalid={!!fields.priority.value}
+            isInvalid={!!fields.category.errors?.length}
             key={fields.category.key}
             name={fields.category.name}
-            value={category.value}
-            onSelectionChange={() => category.change}
+            selectedKeys={category.value ? [category.value] : []}
+            onChange={(e) => category.change(e.target.value)}
             onFocus={category.focus}
             onBlur={category.blur}
           >
