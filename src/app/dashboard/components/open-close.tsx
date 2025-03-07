@@ -26,7 +26,7 @@ export const OpenClose = ({
       </header>
       <main className="mt-4 w-full h-[90%] max-h-[90%]">
         <div className="flex w-full h-full flex-col gap-4 rounded-medium border-small border-divider">
-          <ScrollShadow className=" h-full">{children}</ScrollShadow>
+          <ScrollShadow>{children}</ScrollShadow>
         </div>
       </main>
     </div>
