@@ -42,10 +42,8 @@ export const Dashboard = ({
           <div className="flex h-8 w-8 items-center justify-center rounded-full bg-foreground">
             <Icon className="text-background" icon="solar:wallet-line-duotone" width={24} />
           </div>
-          <Link
-            href="/"
-            >
-          <span className="text-small font-bold uppercase">Acme</span>
+          <Link href="/">
+            <span className="text-small font-bold uppercase">Acme</span>
           </Link>
         </div>
         <Spacer y={8} />
@@ -56,16 +54,16 @@ export const Dashboard = ({
             <p className="text-tiny text-default-400">{session?.user?.email}</p>
           </div>
         </div>
-        <ScrollShadow className="-mr-6 h-full max-h-full py-6 pr-6">
-          <Sidebar
-            defaultSelectedKey="dashboard"
-            items={sectionItemsWithTeams}
-            selectedKeys={[currentPath]}
-            onSelect={(key) => {
-              console.log("key", key);
-            }}
-          />
-        </ScrollShadow>
+        {/* <ScrollShadow className="-mr-6 h-full max-h-full py-6 pr-6"> */}
+        <Sidebar
+          defaultSelectedKey="dashboard"
+          items={sectionItemsWithTeams}
+          selectedKeys={[currentPath]}
+          onSelect={(key) => {
+            console.log("key", key);
+          }}
+        />
+        {/* </ScrollShadow> */}
         <Spacer y={8} />
         <div className="mt-auto flex flex-col">
           <Button
@@ -94,9 +92,7 @@ export const Dashboard = ({
           </Button>
         </div>
       </div>
-      <OpenClose toggleSideBar={toggleSidebar}>
-        {children}
-      </OpenClose>
+      <OpenClose toggleSideBar={toggleSidebar}>{children}</OpenClose>
     </div>
   );
 };
