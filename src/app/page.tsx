@@ -13,9 +13,9 @@ export default async function Home() {
     <>
       <Nav session={session} />
       <div className="mt-40">
-        <Hero />
+        <Hero session={session} />
         <Team />
-        <Pricing />
+        <Pricing session={session} />
         <Faqs />
       </div>
       <Footer />

@@ -16,17 +16,47 @@ import {
   Tabs,
 } from "@heroui/react";
 import { cn } from "@heroui/react";
+import { useRouter } from "next/navigation";
 
-import { FrequencyEnum } from "./pricing-types";
+import { FrequencyEnum, Tier } from "./pricing-types";
 import { frequencies, tiers } from "./pricing-tiers";
+import { Session } from "next-auth";
 
-export const Pricing = () => {
+export const Pricing = ({ session }: { session: Session | null }) => {
+  const router = useRouter();
   const [selectedFrequency, setSelectedFrequency] = React.useState(frequencies[0]);
 
   const onFrequencyChange = (selectedKey: React.Key) => {
     const frequencyIndex = frequencies.findIndex((f) => f.key === selectedKey);
 
     setSelectedFrequency(frequencies[frequencyIndex]);
+  };
+
+  const handleSubscribe = async (tier: Tier) => {
+    if (!session?.user) {
+      router.push("/login");
+      return;
+    }
+
+    try {
+      const response = await fetch("/api/stripe/create-checkout", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          plan: tier.key.toLowerCase(),
+          frequency: selectedFrequency.key,
+        }),
+      });
+
+      const { url } = await response.json();
+      if (url) {
+        router.push(url);
+      }
+    } catch (error) {
+      console.error("Error creating checkout session:", error);
+    }
   };
 
   return (
@@ -99,7 +129,7 @@ export const Pricing = () => {
             <Divider />
             <CardBody className="gap-8">
               <p className="flex items-baseline gap-1 pt-2">
-                <span className="inline bg-gradient-to-br from-foreground to-foreground-600 bg-clip-text text-4xl font-semibold leading-7 tracking-tight text-transparent">
+                <span className="inline bg-gradient-to-br from-foreground to-foreground-600 bg-clip-text text-4xl font-semibold leading-7 tracking-tight">
                   {typeof tier.price === "string" ? tier.price : tier.price[selectedFrequency.key]}
                 </span>
                 {typeof tier.price !== "string" ? (
@@ -122,10 +152,11 @@ export const Pricing = () => {
             <CardFooter>
               <Button
                 fullWidth
-                as={Link}
-                color="primary"
+                // as={Link}
+                color={tier.buttonColor}
                 href={tier.href}
                 variant={tier.buttonVariant}
+                onPress={() => handleSubscribe(tier)}
               >
                 {tier.buttonText}
               </Button>

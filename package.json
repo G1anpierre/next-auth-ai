@@ -23,6 +23,7 @@
     "@internationalized/date": "^3.6.0",
     "@prisma/client": "^6.4.0",
     "@prisma/extension-accelerate": "^1.2.1",
+    "@stripe/stripe-js": "^5.10.0",
     "@types/html-to-text": "^9.0.4",
     "ai": "^4.1.42",
     "eslint-config-prettier": "^9.1.0",
@@ -35,6 +36,7 @@
     "react": "19.0.0",
     "react-dom": "19.0.0",
     "recharts": "^2.14.1",
+    "stripe": "^17.7.0",
     "zod": "^3.23.8"
   },
   "devDependencies": {
