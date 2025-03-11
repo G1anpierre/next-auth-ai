@@ -52,7 +52,7 @@ export async function POST(req: Request) {
         },
       ],
       success_url: `${origin}/dashboard?success=true`,
-      cancel_url: `${origin}/pricing?canceled=true`,
+      cancel_url: `${origin}/dashboard/settings?canceled=true`,
       metadata: {
         userId: session.user.id,
         plan,

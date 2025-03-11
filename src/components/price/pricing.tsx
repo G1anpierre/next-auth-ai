@@ -21,16 +21,20 @@ import { useRouter } from "next/navigation";
 import { FrequencyEnum, Tier } from "./pricing-types";
 import { frequencies, tiers } from "./pricing-tiers";
 import { Session } from "next-auth";
-
+import { useGetSubscription } from "@/hooks/useGetSubscription";
 export const Pricing = ({ session }: { session: Session | null }) => {
   const router = useRouter();
   const [selectedFrequency, setSelectedFrequency] = React.useState(frequencies[0]);
+
+  const { subscription, loading } = useGetSubscription();
 
   const onFrequencyChange = (selectedKey: React.Key) => {
     const frequencyIndex = frequencies.findIndex((f) => f.key === selectedKey);
 
     setSelectedFrequency(frequencies[frequencyIndex]);
   };
+
+  console.log("subscription", subscription)
 
   const handleSubscribe = async (tier: Tier) => {
     if (!session?.user) {
@@ -58,6 +62,12 @@ export const Pricing = ({ session }: { session: Session | null }) => {
       console.error("Error creating checkout session:", error);
     }
   };
+
+
+  if (subscription?.status === "active") {
+    return  null
+  }
+
 
   return (
     <div className="relative flex max-w-6xl mx-auto flex-col items-center py-24" id="pricing">
@@ -152,7 +162,6 @@ export const Pricing = ({ session }: { session: Session | null }) => {
             <CardFooter>
               <Button
                 fullWidth
-                // as={Link}
                 color={tier.buttonColor}
                 href={tier.href}
                 variant={tier.buttonVariant}
