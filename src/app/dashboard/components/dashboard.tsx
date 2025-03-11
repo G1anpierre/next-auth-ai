@@ -8,7 +8,7 @@ import { cn, Link } from "@heroui/react";
 import { sectionItemsWithTeams } from "./sidebar-items";
 
 import Sidebar from "./sidebar";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { signOut } from "@/actions/sign-out";
 import { Session } from "next-auth";
 import { OpenClose } from "./open-close";
@@ -23,6 +23,7 @@ export const Dashboard = ({
   const [isHidden, setIsHidden] = React.useState(false);
   const pathname = usePathname();
   const currentPath = pathname.split("/")?.[1];
+  const router = useRouter();
 
   const toggleSidebar = () => {
     setIsHidden(!isHidden);
@@ -42,10 +43,8 @@ export const Dashboard = ({
           <div className="flex h-8 w-8 items-center justify-center rounded-full bg-foreground">
             <Icon className="text-background" icon="solar:wallet-line-duotone" width={24} />
           </div>
-          <Link
-            href="/"
-            >
-          <span className="text-small font-bold uppercase">Acme</span>
+          <Link href="/">
+            <span className="text-small font-bold uppercase">Acme</span>
           </Link>
         </div>
         <Spacer y={8} />
@@ -56,16 +55,16 @@ export const Dashboard = ({
             <p className="text-tiny text-default-400">{session?.user?.email}</p>
           </div>
         </div>
-        <ScrollShadow className="-mr-6 h-full max-h-full py-6 pr-6">
-          <Sidebar
-            defaultSelectedKey="dashboard"
-            items={sectionItemsWithTeams}
-            selectedKeys={[currentPath]}
-            onSelect={(key) => {
-              console.log("key", key);
-            }}
-          />
-        </ScrollShadow>
+        {/* <ScrollShadow className="-mr-6 h-full max-h-full py-6 pr-6"> */}
+        <Sidebar
+          defaultSelectedKey="dashboard"
+          items={sectionItemsWithTeams}
+          selectedKeys={[currentPath]}
+          onSelect={(key) => {
+            console.log("key", key);
+          }}
+        />
+        {/* </ScrollShadow> */}
         <Spacer y={8} />
         <div className="mt-auto flex flex-col">
           <Button
@@ -75,8 +74,9 @@ export const Dashboard = ({
               <Icon className="text-default-500" icon="solar:info-circle-line-duotone" width={24} />
             }
             variant="light"
+            onPress={() => router.push("/dashboard/settings")}
           >
-            Help & Information
+            Settings
           </Button>
           <Button
             className="justify-start text-default-500 data-[hover=true]:text-foreground"
@@ -94,9 +94,7 @@ export const Dashboard = ({
           </Button>
         </div>
       </div>
-      <OpenClose toggleSideBar={toggleSidebar}>
-        {children}
-      </OpenClose>
+      <OpenClose toggleSideBar={toggleSidebar}>{children}</OpenClose>
     </div>
   );
 };

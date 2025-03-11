@@ -3,7 +3,7 @@
 import React from "react";
 import { Button, Input, Checkbox, Link, Divider } from "@heroui/react";
 import { Icon } from "@iconify/react";
-import { signInGithub } from "@/actions/sign-in";
+import { signInGithub, signInGoogle } from "@/actions/sign-in";
 
 export const Login = () => {
   const [isVisible, setIsVisible] = React.useState(false);
@@ -62,13 +62,16 @@ export const Login = () => {
           <Divider className="flex-1" />
         </div>
         <div className="flex flex-col gap-2">
-          <Button
-            startContent={<Icon icon="flat-color-icons:google" width={24} />}
-            variant="bordered"
-            disabled
-          >
-            Continue with Google
-          </Button>
+          <form action={signInGoogle} className="flex-1">
+            <Button
+              startContent={<Icon icon="flat-color-icons:google" width={24} />}
+              fullWidth
+              type="submit"
+              variant="bordered"
+            >
+              Continue with Google
+            </Button>
+          </form>
           <form action={signInGithub} className="flex-1">
             <Button
               startContent={<Icon className="text-default-500" icon="fe:github" width={24} />}
