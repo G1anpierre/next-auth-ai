@@ -1,40 +1,15 @@
 "use client";
 
 import { Button, Card, CardBody, CardHeader, Chip } from "@heroui/react";
-import { useCallback, useEffect, useState } from "react";
+import { useState } from "react";
 import { formatDate } from "@/utils/format-date";
-
-type Subscription = {
-  id: string;
-  status: string;
-  interval: string;
-  intervalCount: number;
-  productName: string;
-  currentPeriodEnd: number;
-  cancelAtPeriodEnd: boolean;
-};
+import { useGetSubscription } from "@/hooks/useGetSubscription";
 
 export function SubscriptionSettings() {
-  const [subscription, setSubscription] = useState<Subscription | null>(null);
-  const [loading, setLoading] = useState(true);
+
   const [actionLoading, setActionLoading] = useState(false);
-
-  const fetchSubscription = useCallback(async () => {
-    try {
-      const response = await fetch('/api/stripe/subscription');
-      const data = await response.json();
-
-      setSubscription(data.subscription);
-    } catch (error) {
-      console.error('Error fetching subscription:', error);
-    } finally {
-      setLoading(false);
-    }
-  }, []);
-
-  useEffect(() => {
-    fetchSubscription();
-  }, [fetchSubscription]);
+  const { subscription, fetchSubscription, loading } = useGetSubscription();
+ 
 
   const handleManageSubscription = async () => {
     try {
@@ -46,7 +21,6 @@ export function SubscriptionSettings() {
         },
       });
       const data = await response.json();
-      console.log("data", data)
       if (data.url) {
         window.location.href = data.url;
       }
@@ -57,7 +31,7 @@ export function SubscriptionSettings() {
     }
   };
 
-  const handleCancelSubscription = async () => {
+  const handleSubscription = async (action: string) => {
     try {
       setActionLoading(true);
       await fetch('/api/stripe/subscription', {
@@ -65,29 +39,11 @@ export function SubscriptionSettings() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ action: 'cancel' }),
+        body: JSON.stringify({ action: action }),
       });
       await fetchSubscription();
     } catch (error) {
-      console.error('Error canceling subscription:', error);
-    } finally {
-      setActionLoading(false);
-    }
-  };
-
-  const handleResumeSubscription = async () => {
-    try {
-      setActionLoading(true);
-      await fetch('/api/stripe/subscription', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ action: 'resume' }),
-      });
-      await fetchSubscription();
-    } catch (error) {
-      console.error('Error resuming subscription:', error);
+      console.error(`Error ${action} subscription:`, error);
     } finally {
       setActionLoading(false);
     }
@@ -166,7 +122,7 @@ export function SubscriptionSettings() {
               color="primary"
               variant="flat"
               isLoading={actionLoading}
-              onPress={handleResumeSubscription}
+              onPress={() => handleSubscription('resume')}
             >
               Resume Subscription
             </Button>
@@ -175,7 +131,7 @@ export function SubscriptionSettings() {
               color="danger"
               variant="flat"
               isLoading={actionLoading}
-              onPress={handleCancelSubscription}
+              onPress={() => handleSubscription('cancel')}
             >
               Cancel Subscription
             </Button>

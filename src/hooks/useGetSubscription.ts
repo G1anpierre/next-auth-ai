@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 
 type Subscription = {
   id: string;
@@ -16,22 +16,22 @@ export const useGetSubscription = () => {
   const [subscription, setSubscription] = useState<Subscription | null>(null);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchSubscription = async () => {
-        try {
+  const fetchSubscription = useCallback(async () => {
+      try {
 
-            const subscription = await fetch("/api/stripe/subscription");
-            const data = await subscription.json();
-            setSubscription(data.subscription);
-            setLoading(false);
-        } catch (error) {
-            console.error("Error fetching subscription:", error);
-            setLoading(false);
-        }
-    };
-
-    fetchSubscription();
+          const subscription = await fetch("/api/stripe/subscription");
+          const data = await subscription.json();
+          setSubscription(data.subscription);
+          setLoading(false);
+      } catch (error) {
+          console.error("Error fetching subscription:", error);
+          setLoading(false);
+      }
   }, []);
 
-  return { subscription, loading };
+  useEffect(() => {
+    fetchSubscription();
+  }, [fetchSubscription]);
+
+  return { subscription, fetchSubscription, loading };
 };
