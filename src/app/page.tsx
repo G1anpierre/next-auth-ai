@@ -5,9 +5,11 @@ import { Team } from "@/components/team/team";
 import { Faqs } from "@/components/faqs";
 import { Nav } from "@/components/nav";
 import { auth } from "@/auth";
+import { getSubscriptionAction } from "@/actions/subscription-actions";
 
 export default async function Home() {
   const session = await auth();
+  const { subscription, error } = await getSubscriptionAction();
 
   return (
     <>
@@ -15,7 +17,9 @@ export default async function Home() {
       <div className="mt-40">
         <Hero session={session} />
         <Team />
-        <Pricing session={session} />
+        {subscription?.status !== "active" && (
+          <Pricing session={session} />
+        )}
         <Faqs />
       </div>
       <Footer />
