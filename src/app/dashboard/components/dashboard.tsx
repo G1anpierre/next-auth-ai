@@ -8,7 +8,7 @@ import { cn, Link } from "@heroui/react";
 import { sectionItemsWithTeams } from "./sidebar-items";
 
 import Sidebar from "./sidebar";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { signOut } from "@/actions/sign-out";
 import { Session } from "next-auth";
 import { OpenClose } from "./open-close";
@@ -23,6 +23,7 @@ export const Dashboard = ({
   const [isHidden, setIsHidden] = React.useState(false);
   const pathname = usePathname();
   const currentPath = pathname.split("/")?.[1];
+  const router = useRouter();
 
   const toggleSidebar = () => {
     setIsHidden(!isHidden);
@@ -73,8 +74,9 @@ export const Dashboard = ({
               <Icon className="text-default-500" icon="solar:info-circle-line-duotone" width={24} />
             }
             variant="light"
+            onPress={() => router.push("/dashboard/settings")}
           >
-            Help & Information
+            Settings
           </Button>
           <Button
             className="justify-start text-default-500 data-[hover=true]:text-foreground"

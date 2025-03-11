@@ -3,10 +3,10 @@
 import { Button, Link } from "@heroui/react";
 import React from "react";
 import { Icon } from "@iconify/react";
-import { useSession } from "next-auth/react";
+import { Session } from "next-auth";
 
-export const Hero = () => {
-  const session = useSession();
+export const Hero = ({ session }: { session: Session | null }) => {
+
 
   return (
     <main>
@@ -39,7 +39,7 @@ export const Hero = () => {
             className="h-10 w-[163px] px-[16px] py-[10px] text-small font-medium leading-5 text-background"
             radius="full"
             as={Link}
-            href={session.data?.user ? "/dashboard" : "/login"}
+            href={session?.user ? "/dashboard" : "/login"}
           >
             Get Started
           </Button>
