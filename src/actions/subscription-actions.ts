@@ -18,7 +18,6 @@ export async function getSubscriptionAction() {
       return { subscription: null };
     }
 
-    console.log("User ID:", session.user.id); // Debug user ID
 
     const user = await prisma.user.findUnique({
       where: {
@@ -31,7 +30,7 @@ export async function getSubscriptionAction() {
       },
     });
 
-    console.log("Prisma User Result:", user); // Debug prisma result
+
 
     if (!user) {
       console.log("No user found in database");

@@ -164,8 +164,6 @@ export async function PUT(req: Request) {
       );
     }
 
-    console.log("user", user.stripeCustomerId)
-
     const subscriptions = await stripe.subscriptions.list({
       customer: user.stripeCustomerId,
       status: 'active',

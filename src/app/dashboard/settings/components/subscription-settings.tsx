@@ -4,8 +4,10 @@ import { Button, Card, CardBody, CardHeader, Chip } from "@heroui/react";
 import { useState } from "react";
 import { formatDate } from "@/utils/format-date";
 import { useGetSubscription } from "@/hooks/useGetSubscription";
+import { Pricing } from "@/components/price/pricing";
+import { Session } from "next-auth";
 
-export function SubscriptionSettings() {
+export function SubscriptionSettings({ session }: { session: Session | null }) {
 
   const [actionLoading, setActionLoading] = useState(false);
   const { subscription, fetchSubscription, loading } = useGetSubscription();
@@ -71,7 +73,7 @@ export function SubscriptionSettings() {
           <h2 className="text-xl font-semibold">Subscription</h2>
         </CardHeader>
         <CardBody>
-          <p className="text-default-500">You don't have an active subscription.</p>
+          <Pricing session={session} />
         </CardBody>
       </Card>
     );
