@@ -85,7 +85,7 @@ export const Login = () => {
         </div>
         <p className="text-center text-small">
           Need to create an account?&nbsp;
-          <Link href="#" size="sm">
+          <Link href="/signup" size="sm">
             Sign Up
           </Link>
         </p>
