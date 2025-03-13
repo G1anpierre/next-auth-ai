@@ -11,13 +11,19 @@ export default async function Home() {
   const session = await auth();
   const { subscription, error } = await getSubscriptionAction();
 
+  // Show pricing in these cases:
+  // 1. User is not logged in
+  // 2. User is logged in but has no subscription
+  // 3. User's subscription is not active
+  const shouldShowPricing = !session || !subscription || subscription.status !== "active";
+
   return (
     <>
       <Nav session={session} />
       <div className="mt-40">
         <Hero session={session} />
         <Team />
-        {subscription?.status !== "active" && (
+        {shouldShowPricing && (
           <Pricing session={session} />
         )}
         <Faqs />

@@ -17,7 +17,7 @@ export const Dashboard = ({
   session,
   children,
 }: {
-  session: Session;
+  session: Session | null;
   children: React.ReactNode;
 }) => {
   const [isHidden, setIsHidden] = React.useState(false);

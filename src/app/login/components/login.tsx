@@ -3,24 +3,42 @@
 import React from "react";
 import { Button, Input, Checkbox, Link, Divider } from "@heroui/react";
 import { Icon } from "@iconify/react";
-import { signInGithub, signInGoogle } from "@/actions/sign-in";
-
+import { signInCredentials, signInGithub, signInGoogle } from "@/actions/sign-in";
+import { useActionState } from "react";
+import { useForm } from "@conform-to/react";
+import { parseWithZod } from "@conform-to/zod";
+import { LoginSchema } from "@/lib/definitions";
 export const Login = () => {
   const [isVisible, setIsVisible] = React.useState(false);
 
   const toggleVisibility = () => setIsVisible(!isVisible);
 
+  const [lastResult, actionSignInCredentials, isPending] = useActionState(signInCredentials, undefined)
+
+  const [form, fields] = useForm({
+    lastResult,
+    onValidate({ formData }) {
+      return parseWithZod(formData, { schema: LoginSchema })
+    },
+    shouldValidate: 'onBlur',
+    shouldRevalidate: 'onInput',
+  })
+
   return (
     <div className="flex h-full w-full items-center justify-center">
       <div className="flex w-full max-w-sm flex-col gap-4 rounded-large bg-content1 px-8 pb-10 pt-6 shadow-small">
         <p className="pb-2 text-xl font-medium">Log In</p>
-        <form className="flex flex-col gap-3" onSubmit={(e) => e.preventDefault()}>
+        <form id={form.id} action={actionSignInCredentials} className="flex flex-col gap-3" onSubmit={form.onSubmit}>
           <Input
             label="Email Address"
-            name="email"
+            name={fields.email.name}
             placeholder="Enter your email"
             type="email"
             variant="bordered"
+            key={fields.email.key}
+            defaultValue={fields.email.value}
+            errorMessage={fields.email.errors}
+            isInvalid={!!fields.email.errors?.length}
           />
           <Input
             endContent={
@@ -39,10 +57,14 @@ export const Login = () => {
               </button>
             }
             label="Password"
-            name="password"
+            name={fields.password.name}
             placeholder="Enter your password"
             type={isVisible ? "text" : "password"}
             variant="bordered"
+            key={fields.password.key}
+            defaultValue={fields.password.value}
+            errorMessage={fields.password.errors}
+            isInvalid={!!fields.password.errors?.length}
           />
           <div className="flex items-center justify-between px-1 py-2">
             <Checkbox name="remember" size="sm">
@@ -52,7 +74,12 @@ export const Login = () => {
               Forgot password?
             </Link>
           </div>
-          <Button color="primary" type="submit">
+          <div className="flex flex-col gap-2">
+            {form.errors?.map((error) => (
+              <p key={error} className="text-danger-500">{error}</p>
+            ))}
+          </div>
+          <Button color="primary" type="submit" isLoading={isPending}>
             Log In
           </Button>
         </form>
@@ -85,7 +112,7 @@ export const Login = () => {
         </div>
         <p className="text-center text-small">
           Need to create an account?&nbsp;
-          <Link href="#" size="sm">
+          <Link href="/signup" size="sm">
             Sign Up
           </Link>
         </p>
