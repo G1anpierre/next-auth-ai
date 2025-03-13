@@ -4,21 +4,9 @@ import { prisma } from "@/prisma";
 import GitHub from "next-auth/providers/github";
 import Google from "next-auth/providers/google";
 import Credentials from "next-auth/providers/credentials";
-import type { User } from "@prisma/client";
 import bcrypt from "bcryptjs";
 import { LoginSchema } from "./lib/definitions";
-
-async function getUser(email: string): Promise<User | null> {
-  try {
-    const user = await prisma.user.findUnique({
-      where: { email },
-    });
-    return user;
-  } catch (error) {
-    console.error('Failed to fetch user:', error);
-    throw new Error('Failed to fetch user.');
-  }
-}
+import { getUser } from "./actions/user";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   adapter: PrismaAdapter(prisma),
@@ -38,29 +26,38 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
         if (!parsedCredentials.success) {
           console.log('Invalid credentials format');
-          return null;
+          return null
         }
 
         const { email, password } = parsedCredentials.data;
-        const user = await getUser(email);
-        
-        if (!user?.password) {
-          console.log('User not found or no password set');
-          return null;
+
+        try {
+
+          const user = await getUser(email);
+          
+          if (!user?.password) {
+            console.log('User not found or no password set');
+            return null
+          }
+          
+          const passwordsMatch = await bcrypt.compare(password, user.password);
+          
+          if (!passwordsMatch) {
+            console.log('Passwords do not match');
+            return null
+          }
+          
+          return {
+            id: user.id,
+            email: user.email,
+            name: user.name,
+          };
+        } catch (error) {
+          console.error('Failed to authorize user:', error);
+          return {
+            error: 'Failed to authorize user',
+          };
         }
-
-        const passwordsMatch = await bcrypt.compare(password, user.password);
-
-        if (!passwordsMatch) {
-          console.log('Passwords do not match');
-          return null;
-        }
-
-        return {
-          id: user.id,
-          email: user.email,
-          name: user.name,
-        };
       },
     }),
   ],

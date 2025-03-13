@@ -13,10 +13,10 @@ export const Login = () => {
 
   const toggleVisibility = () => setIsVisible(!isVisible);
 
-  const [state, actionSignInCredentials, isPending] = useActionState(signInCredentials, undefined)
+  const [lastResult, actionSignInCredentials, isPending] = useActionState(signInCredentials, undefined)
 
   const [form, fields] = useForm({
-    lastResult: state,
+    lastResult,
     onValidate({ formData }) {
       return parseWithZod(formData, { schema: LoginSchema })
     },
@@ -36,6 +36,7 @@ export const Login = () => {
             type="email"
             variant="bordered"
             key={fields.email.key}
+            defaultValue={fields.email.value}
             errorMessage={fields.email.errors}
             isInvalid={!!fields.email.errors?.length}
           />
@@ -61,6 +62,7 @@ export const Login = () => {
             type={isVisible ? "text" : "password"}
             variant="bordered"
             key={fields.password.key}
+            defaultValue={fields.password.value}
             errorMessage={fields.password.errors}
             isInvalid={!!fields.password.errors?.length}
           />
