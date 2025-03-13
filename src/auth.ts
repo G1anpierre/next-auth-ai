@@ -3,11 +3,10 @@ import { PrismaAdapter } from "@auth/prisma-adapter";
 import { prisma } from "@/prisma";
 import GitHub from "next-auth/providers/github";
 import Google from "next-auth/providers/google";
-import { authConfig } from "./auth.config";
 import Credentials from "next-auth/providers/credentials";
-import { z } from "zod";
 import type { User } from "@prisma/client";
 import bcrypt from "bcryptjs";
+import { LoginSchema } from "./lib/definitions";
 
 async function getUser(email: string): Promise<User | null> {
   try {
@@ -34,8 +33,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     }),
     Credentials({
       async authorize(credentials) {
-        const parsedCredentials = z
-          .object({ email: z.string().email(), password: z.string().min(6) })
+        const parsedCredentials = LoginSchema
           .safeParse(credentials);
 
         if (!parsedCredentials.success) {
