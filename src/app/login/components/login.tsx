@@ -83,7 +83,7 @@ export const Login = () => {
           </div>
           <div className="flex flex-col gap-2">
             {form.errors?.map((error) => (
-              <p key={error} className="text-danger-500">{error}</p>
+              <p key={error} className="text-danger-500 text-sm">{error}</p>
             ))}
           </div>
           <Button color="primary" type="submit" isLoading={isPending}>
@@ -117,7 +117,7 @@ export const Login = () => {
             </Button>
           </form>
         </div>
-        <p className="text-center text-small">
+        <p className="text-center text-sm">
           Need to create an account?&nbsp;
           <Link href="/signup" size="sm">
             Sign Up

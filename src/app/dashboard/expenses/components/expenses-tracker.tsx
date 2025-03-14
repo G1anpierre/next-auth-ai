@@ -28,13 +28,15 @@ export const ExpensesTracker = ({ expenses }: { expenses: Expense[] }) => {
 
   const [state, actionCreateExpense, isPending] = useActionState(createExpenseAction, initialState);
 
+
   return (
     <Card>
       <CardHeader className="flex flex-col gap-4">
-        <div className="flex flex-col gap-1 items-start basis-1/2">
+        <div className="flex flex-col gap-1 items-center basis-1/2">
           <h1 className="text-2xl font-bold">Expenses</h1>
-          <p className="text-base text-default-500">Track your expenses</p>
+          <p className="text-base text-default-500 text-center">Track your expenses</p>
         </div>
+        {expenses.length > 0 && (
         <div className="basis-1/2">
           <CircleChartCard
             title="Total Expenses"
@@ -48,6 +50,7 @@ export const ExpensesTracker = ({ expenses }: { expenses: Expense[] }) => {
             }))}
           />
         </div>
+      )}
       </CardHeader>
       <form action={actionCreateExpense}>
         <CardBody className="flex flex-col gap-4">
@@ -74,6 +77,7 @@ export const ExpensesTracker = ({ expenses }: { expenses: Expense[] }) => {
               Add Expense
             </Button>
           </div>
+        {state.message && !state.success && <p className="text-sm text-danger">{state.message}</p>}
         </CardBody>
       </form>
     </Card>

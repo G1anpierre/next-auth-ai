@@ -1,4 +1,4 @@
-// "use server";
+"use server";
 
 import { auth } from "@/auth";
 import { prisma } from "@/prisma";
@@ -26,7 +26,7 @@ export const createExpenseAction = async (previousState: any, formData: FormData
       };
     }
 
-    const expense = await prisma.expense.create({
+    await prisma.expense.create({
       data: {
         category: category.toString(),
         amount: parseFloat(amount.toString()),

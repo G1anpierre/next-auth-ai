@@ -70,7 +70,7 @@ export const FinancialTips = ({
         </p>
         <Button
           onPress={generateTips}
-          isDisabled={isLoading}
+          isDisabled={isLoading || goals.length === 0}
           isLoading={isLoading}
           color="primary"
           className="w-fit"
