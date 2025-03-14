@@ -51,6 +51,8 @@ export function SubscriptionSettings({ session }: { session: Session | null }) {
     }
   };
 
+  console.log('subscription', subscription);
+
   if (loading) {
     return (
       <Card>

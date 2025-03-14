@@ -12,6 +12,7 @@ const publicRoutes = [
   '/api/auth/signin',
   '/api/auth/signout',
   '/api/auth/session',
+  '/api/stripe/webhook',
 ]
 
 // Middleware function
