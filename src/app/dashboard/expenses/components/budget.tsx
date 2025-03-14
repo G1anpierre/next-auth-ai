@@ -10,7 +10,7 @@ export const Budget = ({
   budget,
   totalExpenses,
 }: {
-  budget: BudgetType | undefined;
+  budget: BudgetType | undefined | null;
   totalExpenses: number;
 }) => {
   const [income, setIncome] = useState(budget?.income ?? 0);

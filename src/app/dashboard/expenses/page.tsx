@@ -12,10 +12,10 @@ const ExpensesPage = async () => {
 
   return (
     <div className="flex flex-col gap-4">
-      {budget && <Budget budget={budget} totalExpenses={totalExpenses ?? 0} />}
-      <ExpensesTracker expenses={data ?? []} />
-      <ExpensesTable expenses={data ?? []} />
-      <Chat budget={budget} expenses={data ?? []} goals={goals ?? []} />
+      {<Budget budget={budget} totalExpenses={totalExpenses ?? 0} />}
+       <ExpensesTracker expenses={data ?? []} />
+      {data && data.length > 0 && <ExpensesTable expenses={data ?? []} />}
+      {data && data.length > 0 && <Chat budget={budget} expenses={data ?? []} goals={goals ?? []} />}
     </div>
   );
 };

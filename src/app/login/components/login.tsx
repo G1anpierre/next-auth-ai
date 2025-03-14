@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { Button, Input, Checkbox, Link, Divider } from "@heroui/react";
 import { Icon } from "@iconify/react";
 import { signInCredentials, signInGithub, signInGoogle } from "@/actions/sign-in";
@@ -8,11 +8,12 @@ import { useActionState } from "react";
 import { useForm } from "@conform-to/react";
 import { parseWithZod } from "@conform-to/zod";
 import { LoginSchema } from "@/lib/definitions";
+import { useRouter } from "next/navigation";
+
 export const Login = () => {
   const [isVisible, setIsVisible] = React.useState(false);
-
   const toggleVisibility = () => setIsVisible(!isVisible);
-
+  const router = useRouter();
   const [lastResult, actionSignInCredentials, isPending] = useActionState(signInCredentials, undefined)
 
   const [form, fields] = useForm({
@@ -23,6 +24,12 @@ export const Login = () => {
     shouldValidate: 'onBlur',
     shouldRevalidate: 'onInput',
   })
+
+  useEffect(() => {
+    if (typeof lastResult === 'string') {
+      router.push(lastResult);
+    }
+  }, [lastResult]);
 
   return (
     <div className="flex h-full w-full items-center justify-center">
@@ -76,7 +83,7 @@ export const Login = () => {
           </div>
           <div className="flex flex-col gap-2">
             {form.errors?.map((error) => (
-              <p key={error} className="text-danger-500">{error}</p>
+              <p key={error} className="text-danger-500 text-sm">{error}</p>
             ))}
           </div>
           <Button color="primary" type="submit" isLoading={isPending}>
@@ -110,7 +117,7 @@ export const Login = () => {
             </Button>
           </form>
         </div>
-        <p className="text-center text-small">
+        <p className="text-center text-sm">
           Need to create an account?&nbsp;
           <Link href="/signup" size="sm">
             Sign Up

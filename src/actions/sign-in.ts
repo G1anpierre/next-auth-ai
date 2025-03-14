@@ -3,7 +3,6 @@
 import { signIn } from "@/auth";
 import { LoginSchema } from "@/lib/definitions";
 import { parseWithZod } from "@conform-to/zod";
-import { redirect } from "next/navigation";
 export async function signInGithub() {
   return signIn("github", { redirectTo: "/dashboard" });
 }
@@ -22,14 +21,17 @@ export async function signInCredentials(state: unknown, formData: FormData) {
   const { email, password } = parsedCredentials.value;
 
   try {
-     await signIn("credentials", { email, password });
-  
+    const result = await signIn("credentials", {
+      email,
+      password,
+      redirect: false,
+      redirectTo: "/dashboard",
+    });
+
+    return result
   } catch (error) {
     return parsedCredentials.reply({
-      formErrors: ["Error: Invalid email or password"],
+      formErrors: ["An error occurred during sign in"],
     });
   }
-
-  redirect("/dashboard");
-  
 }
