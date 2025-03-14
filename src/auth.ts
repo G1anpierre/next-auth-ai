@@ -32,7 +32,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         const { email, password } = parsedCredentials.data;
 
         try {
-
           const user = await getUser(email);
           
           if (!user?.password) {
@@ -54,9 +53,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           };
         } catch (error) {
           console.error('Failed to authorize user:', error);
-          return {
-            error: 'Failed to authorize user',
-          };
+          return null;
         }
       },
     }),
