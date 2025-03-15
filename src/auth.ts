@@ -4,6 +4,7 @@ import { prisma } from "@/prisma";
 import GitHub from "next-auth/providers/github";
 import Google from "next-auth/providers/google";
 import Credentials from "next-auth/providers/credentials";
+import Resend from "next-auth/providers/resend"
 import bcrypt from "bcryptjs";
 import { LoginSchema } from "./lib/definitions";
 import { getUser } from "./actions/user";
@@ -11,6 +12,10 @@ import { getUser } from "./actions/user";
 export const { handlers, signIn, signOut, auth } = NextAuth({
   adapter: PrismaAdapter(prisma),
   providers: [
+    Resend({
+      from: process.env.RESEND_FROM,
+      apiKey: process.env.RESEND_API_KEY,
+    }),
     GitHub({
       clientId: process.env.AUTH_GITHUB_ID,
       clientSecret: process.env.AUTH_GITHUB_SECRET,

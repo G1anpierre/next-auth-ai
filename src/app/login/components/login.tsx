@@ -9,6 +9,7 @@ import { useForm } from "@conform-to/react";
 import { parseWithZod } from "@conform-to/zod";
 import { LoginSchema } from "@/lib/definitions";
 import { useRouter } from "next/navigation";
+import { MagicLinkForm } from "./magic-link-form";
 
 export const Login = () => {
   const [isVisible, setIsVisible] = React.useState(false);
@@ -90,6 +91,17 @@ export const Login = () => {
             Log In
           </Button>
         </form>
+        <div className="flex items-center gap-4 py-2">
+          <Divider className="flex-1" />
+          <p className="shrink-0 text-tiny text-default-500">OR</p>
+          <Divider className="flex-1" />
+        </div>
+        <div className="flex flex-col gap-2">
+         <p className="text-center text-sm text-default-500">
+           Sign in with Magic Link
+         </p>
+         <MagicLinkForm />
+       </div>
         <div className="flex items-center gap-4 py-2">
           <Divider className="flex-1" />
           <p className="shrink-0 text-tiny text-default-500">OR</p>

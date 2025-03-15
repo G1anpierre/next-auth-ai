@@ -49,3 +49,10 @@ export const LoginSchema = z.object({
 })
 
 export type LoginFormType = z.infer<typeof LoginSchema>
+
+
+export const MagicLinkSchema = z.object({
+  email: z.string().email('Invalid email address'),
+})
+
+export type MagicLinkFormType = z.infer<typeof MagicLinkSchema>
