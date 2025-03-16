@@ -19,8 +19,6 @@ export const MagicLinkForm = () => {
     shouldRevalidate: 'onInput',
   });
 
-  console.log({lastResult})
-
   return (
     <form id={form.id} action={actionSignInMagicLink} onSubmit={form.onSubmit} className="flex flex-col gap-2">
         <Input 
