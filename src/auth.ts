@@ -15,6 +15,27 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     Resend({
       from: process.env.RESEND_FROM,
       apiKey: process.env.RESEND_API_KEY,
+      sendVerificationRequest: async ({ identifier: email, url, provider, theme }) => {
+        console.log({email, url, provider, theme})
+        const redirectUrl = new URL(url)
+        redirectUrl.searchParams.set('callbackUrl', '/dashboard')
+        const res = await fetch('https://api.resend.com/emails', {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${provider.apiKey}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            from: provider.from,
+            to: email,
+            subject: `Sign in to ${redirectUrl.host}`,
+            html: `<p>Click <a href="${redirectUrl}">here</a> to sign in to ${redirectUrl.host}</p>`,
+          }),
+        })
+        if (!res.ok) {
+          throw new Error('Failed to send verification request')
+        }
+      },
     }),
     GitHub({
       clientId: process.env.AUTH_GITHUB_ID,
@@ -74,5 +95,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         id: token.sub,
       },
     }),
+    async redirect({ url, baseUrl }) {
+      if (url.startsWith('/')) return `${baseUrl}${url}`
+      return '/dashboard'
+    },
   },
 });
