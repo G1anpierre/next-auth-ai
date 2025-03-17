@@ -13,6 +13,7 @@
     "check": "npm run format:check && npm run lint"
   },
   "dependencies": {
+    "@ai-sdk/deepseek": "^0.1.15",
     "@ai-sdk/openai": "^1.1.13",
     "@ai-sdk/react": "^1.1.17",
     "@ai-sdk/xai": "^1.1.11",
@@ -26,7 +27,7 @@
     "@stripe/stripe-js": "^5.10.0",
     "@types/bcryptjs": "^2.4.6",
     "@types/html-to-text": "^9.0.4",
-    "ai": "^4.1.42",
+    "ai": "^4.1.61",
     "bcryptjs": "^3.0.2",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.2.1",
