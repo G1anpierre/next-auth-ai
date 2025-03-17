@@ -1,15 +1,26 @@
 // import { xai } from "@ai-sdk/xai";
 import { openai } from '@ai-sdk/openai'
+import { createDeepSeek } from "@ai-sdk/deepseek";
 import { streamText } from "ai";
+import { wrapLanguageModel, extractReasoningMiddleware } from 'ai';
 
 // Allow streaming responses up to 30 seconds
 export const maxDuration = 30;
+
+const deepSeek = createDeepSeek({
+  apiKey: process.env.DEEPSEEK_API_KEY,
+});
+
+const model = wrapLanguageModel({
+  model: deepSeek("deepseek-chat"),
+  middleware: extractReasoningMiddleware({ tagName: 'think' })
+});
 
 export async function POST(req: Request) {
   const { messages, financialData } = await req.json();
 
   const result = streamText({
-    model: openai("gpt-3.5-turbo"),
+    model,
     messages: [
       {
         role: "system",
