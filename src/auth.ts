@@ -8,6 +8,7 @@ import Resend from "next-auth/providers/resend"
 import bcrypt from "bcryptjs";
 import { LoginSchema } from "./lib/definitions";
 import { getUser } from "./actions/user";
+import { html, text } from "./app/login/components/magic-mail";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   adapter: PrismaAdapter(prisma),
@@ -28,7 +29,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             from: provider.from,
             to: email,
             subject: `Sign in to ${redirectUrl.host}`,
-            html: `<p>Click <a href="${redirectUrl}">here</a> to sign in to ${redirectUrl.host}</p>`,
+            html: html({ url, host: redirectUrl.host, theme }),
+            text: text({ url, host: redirectUrl.host }),
           }),
         })
         if (!res.ok) {

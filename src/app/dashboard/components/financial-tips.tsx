@@ -30,6 +30,7 @@ export const FinancialTips = ({
     }),
   });
 
+
   const generateTips = () => {
     const prompt = `Based on the following financial information, provide 6 personalized financial tips:
     monthly income: $${budget.income}
