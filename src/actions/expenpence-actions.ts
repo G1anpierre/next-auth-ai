@@ -19,7 +19,7 @@ export const createExpenseAction = async (previousState: any, formData: FormData
     const amount = formData.get("amountExpense");
     const isRecurring = formData.get("recurringExpense");
 
-    if (!category || !amount || !isRecurring) {
+    if (!category || !amount) {
       return {
         message: "Please fill out all fields",
         success: false,
