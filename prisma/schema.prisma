@@ -19,12 +19,12 @@ model User {
   budget             Budget?
   goals              Goal[]
   expenses           Expense[]
+  chats              Chat[]
   stripeCustomerId   String?
   subscriptionPlan   String?
   subscriptionStatus String?
   // Optional for WebAuthn support
   Authenticator      Authenticator[]
-
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -116,4 +116,22 @@ model Authenticator {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@id([userId, credentialID])
+}
+
+model Chat {
+  id        String    @id @default(cuid())
+  userId    String
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  messages  Message[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Message {
+  id        String   @id @default(cuid())
+  content   String   @db.Text
+  role      String   // 'user' or 'assistant'
+  chatId    String
+  chat      Chat     @relation(fields: [chatId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
 }
