@@ -29,6 +29,7 @@ export const Prompt = ({
               financialData,
             },
           });
+          setPrompt("");
         }}
         className="flex w-full flex-col items-start rounded-medium bg-default-100 transition-colors hover:bg-default-200/70"
       >

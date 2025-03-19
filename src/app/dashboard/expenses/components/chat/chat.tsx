@@ -3,9 +3,10 @@
 import MessageCard from "./message-card";
 import { Card, CardBody, CardFooter } from "@heroui/react";
 import { Prompt } from "../prompt/prompt";
-import { useChat } from "ai/react";
+import { useChat } from '@ai-sdk/react';
 import { Budget as BudgetType, Expense, Goal } from "@prisma/client";
 import { convert } from "html-to-text";
+import { useEffect, useState, useRef } from "react";
 
 export const Chat = ({
   budget,
@@ -16,9 +17,47 @@ export const Chat = ({
   expenses: Expense[];
   goals: Goal[];
 }) => {
-  const { messages, input, handleInputChange, handleSubmit } = useChat({
+  const [isLoading, setIsLoading] = useState(true);
+  const { messages, input, handleInputChange, handleSubmit, setMessages } = useChat({
     api: "/api/ai/chat",
+    onFinish: async (message) => {
+      // Save the complete message to the database
+      try {
+        await fetch('/api/ai/chat/save', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ message }),
+        });
+      } catch (error) {
+        console.error('Error saving message:', error);
+      }
+    },
   });
+
+  useEffect(() => {
+    const loadMessages = async () => {
+      try {
+        const response = await fetch('/api/ai/chat/history');
+        if (response.ok) {
+          const history = await response.json();
+          setMessages(history.messages.map((msg: any) => ({
+            id: msg.id,
+            content: msg.content,
+            role: msg.role,
+          })));
+        }
+      } catch (error) {
+        console.error('Failed to load chat history:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadMessages();
+  }, [setMessages]);
+
 
   const financialData = JSON.stringify({
     budget: budget?.income,
@@ -33,6 +72,8 @@ export const Chat = ({
       targetDate: goal.targetDate,
     })),
   });
+
+
 
   return (
     <Card>

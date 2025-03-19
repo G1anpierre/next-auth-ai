@@ -1,5 +1,6 @@
 import { updateGoalAction } from "@/actions/goal-actions";
 import { Button, Input } from "@heroui/react";
+import { Icon } from "@iconify/react";
 import React, { useActionState, useState } from "react";
 
 export const GoalUpdate = ({ goalId }: { goalId: number }) => {
@@ -27,8 +28,8 @@ export const GoalUpdate = ({ goalId }: { goalId: number }) => {
         value={amount}
         onValueChange={setAmount}
       />
-      <Button color="primary" type="submit" isLoading={isPending}>
-        Update
+      <Button color="primary" type="submit" isLoading={isPending} size="md">
+        Saved to goal
       </Button>
     </form>
   );
